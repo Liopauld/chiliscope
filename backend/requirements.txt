@@ -39,6 +39,7 @@ certifi==2024.2.2
 
 # Cloud Storage
 boto3==1.29.7
+cloudinary>=1.36.0
 
 # Authentication & Security
 python-jose[cryptography]==3.3.0
