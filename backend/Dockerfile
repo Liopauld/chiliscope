@@ -34,8 +34,8 @@ RUN mkdir -p /app/uploads /app/models
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 
-# Expose port
-EXPOSE 8000
+# Expose port (Render uses PORT env var, default 10000)
+EXPOSE 10000
 
-# Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application using Render's PORT env var
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}
