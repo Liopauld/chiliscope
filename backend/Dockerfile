@@ -23,8 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY ./app ./app
 
-# Copy Firebase credentials if present
-COPY firebase-credentials.json ./firebase-credentials.json
+# Copy Firebase credentials if present (wildcard so build doesn't fail if missing)
+COPY firebase-credentials.jso[n] ./
 
 # Create directories for uploads and models
 RUN mkdir -p /app/uploads /app/models
