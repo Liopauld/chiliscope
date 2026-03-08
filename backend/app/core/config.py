@@ -83,16 +83,19 @@ class Settings(BaseSettings):
             "http://localhost:80",     # Docker frontend
             "http://localhost",        # Docker frontend (no port)
         ]
+        # Production origins
+        prod_origins = [
+            "https://chiliscope.netlify.app",
+        ]
         try:
             origins = json.loads(self.cors_origins)
             if "*" in origins:
-                # Can't use "*" with allow_credentials=True — expand to known dev origins
-                return dev_origins
-            # Merge configured + dev origins
-            merged = list(set(origins + dev_origins))
+                return list(set(dev_origins + prod_origins))
+            # Merge configured + dev + prod origins
+            merged = list(set(origins + dev_origins + prod_origins))
             return merged
         except json.JSONDecodeError:
-            return dev_origins
+            return list(set(dev_origins + prod_origins))
     
     # File Upload
     max_file_size_mb: int = 10
