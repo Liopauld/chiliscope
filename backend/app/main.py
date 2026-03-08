@@ -129,7 +129,7 @@ async def health_check():
     """Health check endpoint for monitoring."""
     return {
         "status": "healthy",
-        "database": "connected" if MongoDB.database else "disconnected"
+        "database": "connected" if MongoDB.database is not None else "disconnected"
     }
 
 
