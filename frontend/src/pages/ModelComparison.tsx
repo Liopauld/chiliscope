@@ -6,7 +6,7 @@ import {
   PolarRadiusAxis, Radar, Cell,
 } from 'recharts'
 import {
-  Brain, GitBranch, TreePine, Beaker, AlertTriangle,
+  Brain, GitBranch, TreePine, Beaker,
   ChevronDown, ChevronUp, Flame, TrendingUp, Layers,
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
