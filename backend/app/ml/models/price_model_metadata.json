@@ -1,0 +1,70 @@
+{
+  "model_type": "RandomForestRegressor",
+  "best_params": {
+    "max_depth": 10,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "n_estimators": 100
+  },
+  "feature_columns": [
+    "month",
+    "day_of_week",
+    "day_of_month",
+    "quarter",
+    "week_of_year",
+    "is_weekend",
+    "month_sin",
+    "month_cos",
+    "dow_sin",
+    "dow_cos",
+    "price_lag_1",
+    "price_lag_2",
+    "price_lag_3",
+    "price_lag_5",
+    "price_lag_7",
+    "price_lag_14",
+    "price_lag_21",
+    "price_lag_30",
+    "rolling_mean_3",
+    "rolling_std_3",
+    "rolling_min_3",
+    "rolling_max_3",
+    "rolling_mean_7",
+    "rolling_std_7",
+    "rolling_min_7",
+    "rolling_max_7",
+    "rolling_mean_14",
+    "rolling_std_14",
+    "rolling_min_14",
+    "rolling_max_14",
+    "rolling_mean_30",
+    "rolling_std_30",
+    "rolling_min_30",
+    "rolling_max_30",
+    "price_change_1d",
+    "price_change_7d",
+    "price_pct_change_1d",
+    "price_pct_change_7d",
+    "price_spread",
+    "days_since_start",
+    "chili_type_encoded"
+  ],
+  "target_column": "price",
+  "chili_types": [
+    "siling_haba",
+    "siling_labuyo"
+  ],
+  "training_samples": 542,
+  "test_samples": 136,
+  "metrics": {
+    "test_mae": 16.862272582987142,
+    "test_rmse": 24.567825795824124,
+    "test_r2": 0.9823023793181993,
+    "train_r2": 0.9943864070446105
+  },
+  "trained_at": "2026-02-17T22:24:35.690308",
+  "data_sources": [
+    "Siling Labuyo Price(3).xlsx",
+    "Siling Haba.xlsx"
+  ]
+}

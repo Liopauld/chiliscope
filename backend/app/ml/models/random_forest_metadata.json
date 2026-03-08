@@ -1,0 +1,81 @@
+{
+  "model_type": "RandomForestRegressor",
+  "target": "shu",
+  "features": [
+    "variety_code",
+    "pod_length_mm",
+    "pod_width_mm",
+    "pod_weight_g",
+    "color_r",
+    "color_g",
+    "color_b",
+    "hue",
+    "saturation",
+    "value_hsv",
+    "maturity_score",
+    "flower_stress_score"
+  ],
+  "n_train": 480,
+  "n_test": 120,
+  "hyperparameters": {
+    "n_estimators": 200,
+    "max_depth": 15,
+    "min_samples_split": 5,
+    "min_samples_leaf": 3,
+    "max_features": "sqrt"
+  },
+  "train_mae": 6592.4709,
+  "train_rmse": 10272.0332,
+  "train_r2": 0.992268,
+  "train_mape_percent": 7.21,
+  "test_mae": 11497.7101,
+  "test_rmse": 18173.2598,
+  "test_r2": 0.97608,
+  "test_mape_percent": 16.42,
+  "cv_r2_mean": 0.973768,
+  "cv_r2_std": 0.008831,
+  "cv_r2_scores": [
+    0.974964,
+    0.95641,
+    0.979183,
+    0.979391,
+    0.978894
+  ],
+  "cv_mae_mean": 11888.8827,
+  "cv_mae_std": 1548.6193,
+  "feature_importances": {
+    "variety_code": 0.513231,
+    "pod_length_mm": 0.169701,
+    "pod_width_mm": 0.059403,
+    "pod_weight_g": 0.079031,
+    "color_r": 0.045291,
+    "color_g": 0.054442,
+    "color_b": 0.024272,
+    "hue": 0.025435,
+    "saturation": 0.004975,
+    "value_hsv": 0.010281,
+    "maturity_score": 0.00643,
+    "flower_stress_score": 0.007507
+  },
+  "variety_metrics": {
+    "Siling Haba": {
+      "mae": 8036.9303,
+      "rmse": 14191.3799,
+      "r2": -14.090114,
+      "mape_percent": 37.46
+    },
+    "Siling Labuyo": {
+      "mae": 4156.203,
+      "rmse": 6821.3624,
+      "r2": -6.573391,
+      "mape_percent": 4.46
+    },
+    "Siling Demonyo": {
+      "mae": 22299.997,
+      "rmse": 27255.7493,
+      "r2": 0.218753,
+      "mape_percent": 7.34
+    }
+  },
+  "trained_at": "2026-03-01T17:40:50.482950"
+}

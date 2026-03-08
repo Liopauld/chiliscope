@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "ChiliScope",
+    "slug": "chiliscope",
+    "owner": "liopauld",
+    "version": "1.0.0",
+    "scheme": "chiliscope",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#dc2626"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chiliscope.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need camera access to take photos of chili plants for analysis",
+        "NSPhotoLibraryUsageDescription": "We need photo library access to select images for analysis",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#dc2626"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.INTERNET"
+      ],
+      "package": "com.chiliscope.app",
+      "usesCleartextTraffic": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow ChiliScope to access your camera for taking photos of chili plants."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow ChiliScope to access your photos for analysis."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      "expo-web-browser"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "75e87adb-752a-4b9a-8b37-fb90d94ba1f8"
+      }
+    }
+  }
+}

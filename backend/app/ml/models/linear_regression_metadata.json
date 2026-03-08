@@ -1,0 +1,75 @@
+{
+  "model_type": "LinearRegression",
+  "target": "shu",
+  "features": [
+    "variety_code",
+    "pod_length_mm",
+    "pod_width_mm",
+    "pod_weight_g",
+    "color_r",
+    "color_g",
+    "color_b",
+    "hue",
+    "saturation",
+    "value_hsv",
+    "maturity_score",
+    "flower_stress_score"
+  ],
+  "n_train": 480,
+  "n_test": 120,
+  "train_mae": 18160.8249,
+  "train_rmse": 23798.2812,
+  "train_r2": 0.9585,
+  "train_mape_percent": 29.93,
+  "test_mae": 17141.6238,
+  "test_rmse": 21484.7456,
+  "test_r2": 0.966569,
+  "test_mape_percent": 30.91,
+  "cv_r2_mean": 0.956256,
+  "cv_r2_std": 0.00968,
+  "cv_r2_scores": [
+    0.964256,
+    0.945394,
+    0.943467,
+    0.963601,
+    0.964564
+  ],
+  "cv_mae_mean": 18615.7507,
+  "cv_mae_std": 1438.602,
+  "coefficients": {
+    "variety_code": 134884.8107,
+    "pod_length_mm": 16754.607,
+    "pod_width_mm": 7527.8514,
+    "pod_weight_g": 10472.7774,
+    "color_r": -957.7205,
+    "color_g": 2961.644,
+    "color_b": 1407.6029,
+    "hue": 4966.9181,
+    "saturation": -1815.1761,
+    "value_hsv": 294.4553,
+    "maturity_score": 9736.7431,
+    "flower_stress_score": 7051.9261
+  },
+  "intercept": 137586.5979,
+  "variety_metrics": {
+    "Siling Haba": {
+      "mae": 16159.2755,
+      "rmse": 19807.5323,
+      "r2": -28.397069,
+      "mape_percent": 72.95
+    },
+    "Siling Labuyo": {
+      "mae": 11109.7739,
+      "rmse": 12998.5906,
+      "r2": -26.500504,
+      "mape_percent": 11.65
+    },
+    "Siling Demonyo": {
+      "mae": 24155.8218,
+      "rmse": 28696.3619,
+      "r2": 0.133985,
+      "mape_percent": 8.12
+    }
+  },
+  "trained_at": "2026-03-01T17:40:46.581739"
+}

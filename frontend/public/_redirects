@@ -1,0 +1,5 @@
+# Proxy API requests to Render backend
+/api/*  https://chiliscope-api.onrender.com/api/:splat  200
+
+# SPA fallback — all other routes serve index.html
+/*  /index.html  200

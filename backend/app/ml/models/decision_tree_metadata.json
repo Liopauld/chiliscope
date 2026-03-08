@@ -1,0 +1,210 @@
+{
+  "model_type": "DecisionTreeRegressor",
+  "target": "maturity_score",
+  "features": [
+    "variety_code",
+    "color_r",
+    "color_g",
+    "color_b",
+    "hue",
+    "saturation",
+    "value_hsv",
+    "days_to_maturity"
+  ],
+  "n_train": 480,
+  "n_test": 120,
+  "hyperparameters": {
+    "max_depth": 8,
+    "min_samples_split": 10,
+    "min_samples_leaf": 5
+  },
+  "train_mae": 0.0454,
+  "train_rmse": 0.0565,
+  "train_r2": 0.969092,
+  "train_mape_percent": 1121481626355937.1,
+  "test_mae": 0.0842,
+  "test_rmse": 0.1033,
+  "test_r2": 0.87757,
+  "test_mape_percent": 606943449781305.9,
+  "cv_r2_mean": 0.909067,
+  "cv_r2_std": 0.00755,
+  "cv_r2_scores": [
+    0.916335,
+    0.917065,
+    0.906119,
+    0.896442,
+    0.909373
+  ],
+  "cv_mae_mean": 0.0755,
+  "cv_mae_std": 0.0027,
+  "feature_importances": {
+    "variety_code": 0.001151,
+    "color_r": 0.948427,
+    "color_g": 0.012747,
+    "color_b": 0.002313,
+    "hue": 0.023989,
+    "saturation": 0.002114,
+    "value_hsv": 0.004594,
+    "days_to_maturity": 0.004665
+  },
+  "variety_metrics": {
+    "Siling Haba": {
+      "mae": 0.0831,
+      "rmse": 0.0999,
+      "r2": 0.88685,
+      "mape_percent": 1318678990892038.2
+    },
+    "Siling Labuyo": {
+      "mae": 0.074,
+      "rmse": 0.094,
+      "r2": 0.882433,
+      "mape_percent": 18.45
+    },
+    "Siling Demonyo": {
+      "mae": 0.0955,
+      "rmse": 0.1148,
+      "r2": 0.864329,
+      "mape_percent": 502151358451861.25
+    }
+  },
+  "tree_depth": 8,
+  "n_leaves": 62,
+  "decision_rules_preview": "|--- color_r <= 162.50\n|   |--- color_r <= 102.50\n|   |   |--- color_r <= 79.00\n|   |   |   |--- color_g <= 140.50\n|   |   |   |   |--- value: [0.15]\n|   |   |   |--- color_g >  140.50\n|   |   |   |   |--- days_to_maturity <= 71.50\n|   |   |   |   |   |--- days_to_maturity <= 68.50\n|   |   |   |   |   |   |--- truncated branch of depth 3\n|   |   |   |   |   |--- days_to_maturity >  68.50\n|   |   |   |   |   |   |--- truncated branch of depth 2\n|   |   |   |   |--- days_to_maturity >  71.50\n|   |   |   |   |   |--- value: [0.12]\n|   |   |--- color_r >  79.00\n|   |   |   |--- color_g <= 162.50\n|   |   |   |   |--- value_hsv <= 223.20\n|   |   |   |   |   |--- hue <= 74.10\n|   |   |   |   |   |   |--- truncated branch of depth 2\n|   |   |   |   |   |--- hue >  74.10\n|   |   |   |   |   |   |--- truncated branch of depth 3\n|   |   |   |   |--- value_hsv >  223.20\n|   |   |   |   |   |--- value: [0.12]\n|   |   |   |--- color_g >  162.50\n|   |   |   |   |--- days_to_maturity <= 72.50\n|   |   |   |   |   |--- variety_code <= 1.50\n|   |   |   |   |   |   |--- truncated branch of depth 2\n|   |   |   |   |   |--- variety_code >  1.50\n|   |   |   |   |   |   |--- value: [0.15]\n|   |   |   |   |--- days_to_maturity >  72.50\n|   |   |   |   |   |--- value: [0.18]\n|   |--- color_r >  102.50\n|   |   |--- color_r <= 124.50\n|   |   |   |--- hue <= 78.35\n|   |   |   |   |--- color_g <= 99.00\n|   |   |   |   |   |--- value: [0.44]\n|   |   |   |   |--- color_g >  99.00\n|   |   |   |   |   |--- hue <= 39.90\n|   |   |   |   |   |   |--- truncated branch of depth 2\n|   |   |   |   |   |--- hue >  39.90\n|   |   |   |   |   |   |--- truncated branch of depth 3\n|   |   |   |--- hue >  78.35\n|   |   |   |   |--- saturation <= 211.75\n|   |   |   |   |   |--- value: [0.21]\n|   |   |   |   |--- saturation >  211.75\n|   |   |   |   |   |--- value: [0.14]\n|   |   |--- color_r >  124.50\n|   |   |   |--- hue <= 30.05\n|   |   |   |   |--- color_r <= 158.00\n|   |   |   |   |   |--- days_to_maturity <= ",
+  "harvest_readiness_rules": [
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r > 203.0",
+        "days_to_maturity > 87.5",
+        "color_r <= 247.5",
+        "color_g > 20.0"
+      ],
+      "predicted_maturity": 0.922,
+      "stage": "Overripe",
+      "n_samples": 43
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r > 203.0",
+        "days_to_maturity <= 87.5",
+        "days_to_maturity <= 86.5",
+        "color_r > 223.5"
+      ],
+      "predicted_maturity": 0.926,
+      "stage": "Overripe",
+      "n_samples": 17
+    },
+    {
+      "conditions": [
+        "color_r <= 162.5",
+        "color_r > 102.5",
+        "color_r > 124.5",
+        "hue > 30.05",
+        "color_g <= 128.5",
+        "value_hsv <= 211.9",
+        "color_r > 139.5",
+        "variety_code > 0.5"
+      ],
+      "predicted_maturity": 0.51,
+      "stage": "Mature/Ready",
+      "n_samples": 13
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r > 203.0",
+        "days_to_maturity > 87.5",
+        "color_r <= 247.5",
+        "color_g <= 20.0"
+      ],
+      "predicted_maturity": 0.958,
+      "stage": "Overripe",
+      "n_samples": 10
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r <= 203.0"
+      ],
+      "predicted_maturity": 0.84,
+      "stage": "Mature/Ready",
+      "n_samples": 9
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue > 15.25",
+        "days_to_maturity > 85.5"
+      ],
+      "predicted_maturity": 0.795,
+      "stage": "Mature/Ready",
+      "n_samples": 9
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r <= 191.5",
+        "color_g > 86.5",
+        "value_hsv <= 189.8"
+      ],
+      "predicted_maturity": 0.519,
+      "stage": "Mature/Ready",
+      "n_samples": 8
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r <= 191.5",
+        "color_g > 86.5",
+        "value_hsv > 189.8"
+      ],
+      "predicted_maturity": 0.63,
+      "stage": "Mature/Ready",
+      "n_samples": 8
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r > 203.0",
+        "days_to_maturity <= 87.5",
+        "days_to_maturity <= 86.5",
+        "color_r <= 223.5"
+      ],
+      "predicted_maturity": 0.885,
+      "stage": "Overripe",
+      "n_samples": 8
+    },
+    {
+      "conditions": [
+        "color_r > 162.5",
+        "color_r > 191.5",
+        "hue <= 15.25",
+        "color_g <= 59.0",
+        "color_r > 203.0",
+        "days_to_maturity <= 87.5",
+        "days_to_maturity > 86.5"
+      ],
+      "predicted_maturity": 0.845,
+      "stage": "Mature/Ready",
+      "n_samples": 8
+    }
+  ],
+  "trained_at": "2026-03-01T17:40:50.587967"
+}

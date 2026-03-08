@@ -1,0 +1,97 @@
+# Render Blueprint — deploy backend + frontend in one click
+# https://render.com/docs/blueprint-spec
+
+services:
+  # ── FastAPI Backend ──
+  - type: web
+    name: chiliscope-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      # MongoDB Atlas (already provisioned)
+      - key: MONGODB_URL
+        sync: false                       # set manually in Render dashboard
+      - key: DATABASE_NAME
+        value: chiliscope
+      # JWT
+      - key: JWT_SECRET_KEY
+        generateValue: true               # Render generates a random secret
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      # App
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: CORS_ORIGINS
+        value: '["*"]'
+      # Roboflow — Classification
+      - key: ROBOFLOW_API_KEY
+        sync: false
+      - key: ROBOFLOW_PROJECT_ID
+        value: chili-classification-5ohkl
+      - key: ROBOFLOW_MODEL_VERSION
+        value: "6"
+      - key: ROBOFLOW_USE_HOSTED
+        value: "true"
+      # Roboflow — Chili Segmentation
+      - key: ROBOFLOW_CHILI_SEGMENTATION_API_KEY
+        sync: false
+      - key: ROBOFLOW_CHILI_SEGMENTATION_PROJECT_ID
+        value: chili-segmentation-pl3my
+      - key: ROBOFLOW_CHILI_SEGMENTATION_MODEL_VERSION
+        value: "5"
+      # Roboflow — Flower Segmentation
+      - key: ROBOFLOW_SEGMENTATION_PROJECT_ID
+        value: flower-segmentation-brl0m
+      - key: ROBOFLOW_SEGMENTATION_MODEL_VERSION
+        value: "5"
+      # Firebase
+      - key: FIREBASE_CREDENTIALS_PATH
+        value: firebase-credentials.json
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: firebase-credentials.json
+      - key: FIREBASE_PROJECT_ID
+        value: chiliscope-65628
+      # Cloudinary
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: chiliscope
+      # Gemini
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # ── React Frontend (Static Site) ──
+  - type: web
+    name: chiliscope-web
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/dist
+    plan: free
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://chiliscope-api.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://chiliscope-api.onrender.com/api/v1

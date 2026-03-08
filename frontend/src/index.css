@@ -1,0 +1,427 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   BASE LAYER
+   ================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
+  }
+}
+
+/* ================================
+   BUTTON SYSTEM
+   ================================ */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-2.5 rounded-md font-semibold border-none cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:bg-primary-600 hover:-translate-y-0.5 active:scale-[0.98];
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.35);
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-primary border-2 border-primary px-6 py-2.5 rounded-md font-semibold cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:bg-primary hover:text-white active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply bg-white text-foreground border border-border-strong px-5 py-2 rounded-md cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:border-primary hover:text-primary active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-foreground-secondary px-4 py-2 rounded-md cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:bg-surface hover:text-foreground;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white px-6 py-2.5 rounded-md font-semibold border-none cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:bg-danger-600 active:scale-[0.98];
+  }
+
+  .btn-sidebar {
+    @apply bg-sidebar-active text-white px-4 py-2 rounded-md font-medium cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:bg-orange-500 active:scale-[0.98];
+  }
+}
+
+/* ================================
+   CARD STYLES
+   ================================ */
+@layer components {
+  .card-base {
+    @apply bg-card rounded-xl overflow-hidden border border-border;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    @apply transition-all duration-200;
+  }
+
+  .card-base:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.1);
+  }
+
+  .card-elevated {
+    @apply bg-card rounded-xl overflow-hidden border border-border;
+    box-shadow: 0 4px 16px rgba(2, 6, 23, 0.08);
+  }
+
+  .card-header {
+    @apply p-5 border-b border-border;
+  }
+
+  .card-body {
+    @apply p-5;
+  }
+
+  .card-footer {
+    @apply px-5 py-4 bg-surface border-t border-border;
+  }
+}
+
+/* ================================
+   BADGE STYLES
+   ================================ */
+@layer components {
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-mild {
+    @apply bg-green-100 text-green-700;
+  }
+
+  .badge-medium {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  .badge-hot {
+    @apply bg-red-100 text-red-700;
+  }
+
+  .badge-extra-hot {
+    @apply bg-red-900 text-white;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 text-primary-700;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary-100 text-secondary-700;
+  }
+
+  .badge-role {
+    @apply px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider;
+  }
+
+  .badge-role-admin {
+    @apply badge-role bg-danger-100 text-danger-600;
+  }
+
+  .badge-role-researcher {
+    @apply badge-role bg-primary-100 text-primary-700;
+  }
+
+  .badge-role-user {
+    @apply badge-role bg-secondary-100 text-secondary-700;
+  }
+}
+
+/* ================================
+   INPUT STYLES
+   ================================ */
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-input rounded-md text-sm bg-white;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:border-primary;
+    @apply focus:ring-2 focus:ring-primary/20;
+  }
+
+  .input-field.error {
+    @apply border-danger focus:ring-danger/20;
+  }
+}
+
+/* ================================
+   HEAT LEVEL GRADIENTS
+   ================================ */
+@layer components {
+  .heat-gradient-mild {
+    @apply bg-gradient-to-r from-green-400 to-green-500;
+  }
+
+  .heat-gradient-medium {
+    @apply bg-gradient-to-r from-amber-400 to-orange-400;
+  }
+
+  .heat-gradient-hot {
+    @apply bg-gradient-to-r from-orange-500 to-red-500;
+  }
+
+  .heat-gradient-extra-hot {
+    @apply bg-gradient-to-r from-red-600 to-red-800;
+  }
+
+  .heat-scale-bar {
+    @apply bg-gradient-to-r from-green-400 via-amber-400 via-orange-500 to-red-600;
+  }
+}
+
+/* ================================
+   HERO & BACKGROUNDS
+   ================================ */
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 40%, #b91c1c 70%, #dc2626 100%);
+  }
+
+  .hero-overlay {
+    background: linear-gradient(to bottom, rgba(127, 29, 29, 0.6), rgba(28, 25, 23, 0.8));
+  }
+
+  .page-hero {
+    @apply bg-gradient-to-r from-sidebar to-red-600 text-white;
+  }
+
+  .footer-bg {
+    background-color: #1c1917;
+  }
+
+  .stats-bg {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  }
+}
+
+/* ================================
+   MICRO INTERACTIONS
+   ================================ */
+@layer utilities {
+  .hover-lift {
+    @apply transition-all duration-200;
+    @apply hover:-translate-y-0.5 hover:shadow-card-hover;
+  }
+
+  .hover-scale-subtle {
+    @apply transition-transform duration-200;
+    @apply hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .hover-glow-primary {
+    @apply transition-shadow duration-200;
+    @apply hover:shadow-button-hover;
+  }
+
+  .click-shrink {
+    @apply active:scale-[0.98] transition-transform duration-100;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-1;
+  }
+}
+
+/* ================================
+   SIDEBAR UTILITIES
+   ================================ */
+@layer components {
+  .sidebar-nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium;
+    @apply text-white/70 transition-all duration-200;
+    @apply hover:text-white hover:bg-sidebar-hover;
+  }
+
+  .sidebar-nav-item.active {
+    @apply text-white bg-white/10;
+    border-left: 3px solid #f97316;
+  }
+
+  .sidebar-section-label {
+    @apply text-[10px] font-bold uppercase tracking-widest text-white/40 px-3 mb-1;
+  }
+}
+
+/* ================================
+   DATA TABLE (Admin)
+   ================================ */
+@layer components {
+  .table-admin {
+    @apply w-full text-sm;
+  }
+
+  .table-admin th {
+    @apply text-left py-3 px-4 font-semibold text-foreground-secondary bg-surface border-b-2 border-black/20;
+  }
+
+  .table-admin td {
+    @apply py-3 px-4 border-b border-border;
+  }
+
+  .table-admin tr:hover td {
+    @apply bg-primary-50/50;
+  }
+}
+
+/* ================================
+   CUSTOM SCROLLBAR
+   ================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-foreground-muted/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground-muted/50;
+}
+
+/* Sidebar scrollbar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
+}
+
+/* ================================
+   UTILITIES
+   ================================ */
+.shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.spinner {
+  @apply animate-spin rounded-full border-4 border-surface border-t-primary;
+}
+
+.glass {
+  @apply bg-white/80 backdrop-blur-xl border border-white/30;
+}
+
+.text-gradient-brand {
+  @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
+
+.text-gradient-chili {
+  @apply bg-gradient-to-r from-chili to-orange-500 bg-clip-text text-transparent;
+}
+
+/* Page layout helpers */
+.page-container {
+  @apply max-w-6xl mx-auto px-6 py-6;
+}
+
+.page-title {
+  @apply text-3xl font-bold font-display text-foreground;
+}
+
+.page-subtitle {
+  @apply text-foreground-secondary mt-1;
+}
+
+/* ================================
+   LEAFLET CUSTOM STYLES
+   ================================ */
+.custom-chili-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.chili-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid #f3f4f6;
+}
+
+.chili-popup .leaflet-popup-tip {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.leaflet-control-attribution a {
+  color: #6b7280 !important;
+}
+
+/* User location marker */
+.user-location-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+@keyframes userPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Directions panel */
+.directions-steps-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.directions-steps-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.directions-steps-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.directions-steps-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.directions-steps-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
