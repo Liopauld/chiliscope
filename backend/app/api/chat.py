@@ -31,11 +31,11 @@ logger = logging.getLogger(__name__)
 
 _client = genai.Client(api_key=settings.gemini_api_key)
 
-# Models to try in order (if one is rate-limited, try the next)
+# Models to try in order (if one fails, try the next)
 GEMINI_MODELS = [
-    "gemini-2.5-flash",
-    "gemini-2.5-pro",
-    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+    "gemini-1.5-flash",
+    "gemini-1.5-pro",
 ]
 
 SYSTEM_INSTRUCTION = """\
@@ -164,11 +164,9 @@ async def ask_chilibot(chat: ChatRequest):
                 break
         except Exception as exc:
             exc_str = str(exc)
-            if "429" in exc_str or "RESOURCE_EXHAUSTED" in exc_str:
-                logger.warning("Rate-limited on %s, trying next model…", model_name)
-                continue
-            logger.error("Gemini API error on %s: %s", model_name, exc)
-            break
+            logger.error("Gemini API error on %s: %s", model_name, exc_str)
+            # Always try the next model
+            continue
 
     if not reply_text:
         reply_text = (
