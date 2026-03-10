@@ -19,6 +19,9 @@ import Growth from '@/pages/Growth'
 import ModelComparison from '@/pages/ModelComparison'
 import EmailVerification from '@/pages/EmailVerification'
 import AboutUs from '@/pages/AboutUs'
+import Privacy from '@/pages/Privacy'
+import Terms from '@/pages/Terms'
+import Contact from '@/pages/Contact'
 import { useAuthStore } from '@/stores/authStore'
 
 // Protected route wrapper for admin-only pages
@@ -47,6 +50,9 @@ function App() {
       <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
       <Route path="/verify-email" element={<EmailVerification />} />
       <Route path="/about" element={<AboutUs />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/contact" element={<Contact />} />
       
       {/* App shell — sidebar + header */}
       <Route element={<AppLayout />}>

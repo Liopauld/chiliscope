@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChiliScope ERD</title>
+  <style>
+    body { margin: 0; padding: 20px; background: #fff; font-family: Arial, sans-serif; }
+    h1 { text-align: center; color: #333; }
+    .controls { text-align: center; margin: 16px 0; }
+    .controls button {
+      padding: 10px 24px; font-size: 16px; cursor: pointer;
+      background: #e53e3e; color: #fff; border: none; border-radius: 6px;
+      margin: 0 6px;
+    }
+    .controls button:hover { background: #c53030; }
+    #diagram { text-align: center; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>ChiliScope — Entity Relationship Diagram</h1>
+  <div class="controls">
+    <button onclick="downloadPNG()">Download PNG</button>
+    <button onclick="downloadSVG()">Download SVG</button>
+  </div>
+  <div id="diagram">
+    <pre class="mermaid">
+erDiagram
+    USERS {
+        ObjectId _id PK
+        string user_id UK
+        string email UK
+        string full_name
+        string password_hash
+        enum user_type
+        object location
+        string profile_image
+        boolean is_active
+        string firebase_uid UK
+        datetime created_at
+        datetime updated_at
+    }
+
+    CHILI_SAMPLES {
+        ObjectId _id PK
+        string sample_id UK
+        string user_id FK
+        enum variety
+        array images
+        object flower_morphology
+        object pod_morphology
+        object plant_characteristics
+        object predictions
+        object model_metadata
+        object actual_data
+        string notes
+        array tags
+        boolean is_public
+        int days_since_flowering
+        datetime created_at
+        datetime updated_at
+    }
+
+    CHILI_PRICES {
+        ObjectId _id PK
+        enum chili_type
+        float price
+        enum unit
+        enum location
+        string market_name
+        string notes
+        datetime recorded_date
+        string created_by FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    ML_MODELS {
+        ObjectId _id PK
+        string model_id UK
+        string model_name
+        enum model_type
+        string version
+        string description
+        enum status
+        object architecture
+        object hyperparameters
+        object training_data
+        object performance_metrics
+        string model_file_path
+        boolean is_active
+        datetime created_at
+        datetime trained_at
+        string trained_by FK
+    }
+
+    RECOMMENDATIONS {
+        ObjectId _id PK
+        string recommendation_id UK
+        string sample_id FK
+        string user_id FK
+        enum heat_level
+        int predicted_shu
+        enum variety
+        object culinary
+        object products
+        object market
+        object safety
+        object harvest
+        array similar_varieties
+        datetime created_at
+    }
+
+    FORUM_POSTS {
+        ObjectId _id PK
+        string post_id UK
+        string title
+        string content
+        enum category
+        array tags
+        array images
+        string author_user_id FK
+        string author_full_name
+        string author_user_type
+        boolean is_pinned
+        datetime created_at
+        datetime updated_at
+    }
+
+    FORUM_COMMENTS {
+        ObjectId _id PK
+        string comment_id UK
+        string post_id FK
+        string content
+        string author_user_id FK
+        string author_full_name
+        string author_user_type
+        string parent_id FK
+        datetime created_at
+    }
+
+    FORUM_REACTIONS {
+        ObjectId _id PK
+        string reaction_id UK
+        string target_id FK
+        enum target_type
+        string user_id FK
+        enum reaction_type
+        datetime created_at
+    }
+
+    NOTIFICATIONS {
+        ObjectId _id PK
+        string notification_id UK
+        string recipient_id FK
+        enum type
+        string message
+        string post_id FK
+        string comment_id FK
+        string from_user_id FK
+        string from_user_name
+        boolean is_read
+        datetime created_at
+    }
+
+    PREDICTION_HISTORY {
+        ObjectId _id PK
+        string user_id FK
+        enum variety
+        float confidence
+        int shu
+        datetime created_at
+    }
+
+    ANALYTICS {
+        ObjectId _id PK
+        datetime date UK
+        int total_samples
+        int total_analyses
+        int new_users
+        object analyses_by_variety
+        object analyses_by_heat_level
+        float avg_confidence
+    }
+
+    IMAGES {
+        ObjectId _id PK
+        string image_id UK
+        string sample_id FK
+        string user_id FK
+        string cloudinary_public_id
+        string original_url
+        string processed_url
+        string thumbnail_url
+        object metadata
+        datetime created_at
+    }
+
+    USERS ||--o{ CHILI_SAMPLES : "creates"
+    USERS ||--o{ CHILI_PRICES : "records"
+    USERS ||--o{ RECOMMENDATIONS : "receives"
+    USERS ||--o{ FORUM_POSTS : "authors"
+    USERS ||--o{ FORUM_COMMENTS : "writes"
+    USERS ||--o{ FORUM_REACTIONS : "reacts"
+    USERS ||--o{ NOTIFICATIONS : "receives"
+    USERS ||--o{ PREDICTION_HISTORY : "generates"
+    USERS ||--o{ ML_MODELS : "trains"
+    USERS ||--o{ IMAGES : "uploads"
+    CHILI_SAMPLES ||--o{ RECOMMENDATIONS : "generates"
+    CHILI_SAMPLES ||--o{ IMAGES : "contains"
+    FORUM_POSTS ||--o{ FORUM_COMMENTS : "has"
+    FORUM_POSTS ||--o{ FORUM_REACTIONS : "has"
+    FORUM_POSTS ||--o{ NOTIFICATIONS : "triggers"
+    FORUM_COMMENTS ||--o{ FORUM_REACTIONS : "has"
+    FORUM_COMMENTS ||--o{ FORUM_COMMENTS : "replies to"
+    FORUM_COMMENTS ||--o{ NOTIFICATIONS : "triggers"
+    </pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default', er: { useMaxWidth: false } });
+
+    function getSVGElement() {
+      return document.querySelector('#diagram svg');
+    }
+
+    function downloadSVG() {
+      const svg = getSVGElement();
+      if (!svg) { alert('Diagram not rendered yet'); return; }
+      const clone = svg.cloneNode(true);
+      clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      const blob = new Blob([clone.outerHTML], { type: 'image/svg+xml' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ChiliScope_ERD.svg';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function downloadPNG() {
+      const svg = getSVGElement();
+      if (!svg) { alert('Diagram not rendered yet'); return; }
+      const clone = svg.cloneNode(true);
+      clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      const svgData = new XMLSerializer().serializeToString(clone);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.onload = function () {
+        const scale = 2; // high-res
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'ChiliScope_ERD.png';
+        a.click();
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    }
+  </script>
+</body>
+</html>

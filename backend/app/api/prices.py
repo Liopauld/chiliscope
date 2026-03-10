@@ -3,7 +3,7 @@ Chili Prices API
 ================
 
 Endpoints for chili price tracking and history.
-Admin-only write access, authenticated read access.
+Admin-only write access, public read access.
 """
 
 from datetime import datetime, timedelta
@@ -12,7 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from bson import ObjectId
 
 from ..core.database import MongoDB
-from ..core.security import get_current_user, require_admin, require_authenticated
+from ..core.security import require_admin
 from ..schemas.price import (
     PriceEntryCreate,
     PriceEntryUpdate,
@@ -83,7 +83,6 @@ async def get_price_history(
     start_date: Optional[datetime] = None,
     end_date: Optional[datetime] = None,
     limit: int = Query(default=100, le=500),
-    current_user: dict = Depends(require_authenticated),
 ):
     """
     Get price history with optional filters.
@@ -111,7 +110,6 @@ async def get_price_history(
 @router.get("/current", response_model=CurrentPrices)
 async def get_current_prices(
     location: MarketLocation = MarketLocation.NATIONAL_AVERAGE,
-    current_user: dict = Depends(require_authenticated),
 ):
     """
     Get the most recent prices for all chili types.
@@ -142,9 +140,7 @@ async def get_current_prices(
 
 
 @router.get("/market-overview")
-async def get_market_overview(
-    current_user: dict = Depends(require_authenticated),
-):
+async def get_market_overview():
     """
     Full market overview: all 3 varieties with price trend, stats, and latest prices.
     Designed for the frontend Market Prices dashboard.
@@ -208,7 +204,6 @@ async def get_market_overview(
 async def get_price_analytics(
     chili_type: ChiliType,
     location: MarketLocation = MarketLocation.NATIONAL_AVERAGE,
-    current_user: dict = Depends(require_authenticated),
 ):
     """
     Get price analytics and trends for a specific chili type.
@@ -325,7 +320,6 @@ async def get_price_analytics(
 @router.get("/compare/{chili_type}", response_model=PriceComparisonResponse)
 async def compare_prices_by_location(
     chili_type: ChiliType,
-    current_user: dict = Depends(require_authenticated),
 ):
     """
     Compare prices across different locations for a chili type.
@@ -428,7 +422,6 @@ async def delete_price_entry(
 async def predict_prices(
     chili_type: ChiliType,
     days: int = Query(default=7, ge=1, le=90, description="Days to forecast (1-90)"),
-    current_user: dict = Depends(require_authenticated),
 ):
     """
     Predict future chili prices using the trained Random Forest model.
@@ -456,9 +449,7 @@ async def predict_prices(
 
 
 @router.get("/predict/model-info")
-async def get_prediction_model_info(
-    current_user: dict = Depends(require_authenticated),
-):
+async def get_prediction_model_info():
     """
     Get information about the trained price prediction model.
     """
