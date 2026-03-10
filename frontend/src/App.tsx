@@ -18,6 +18,7 @@ import ChiliMap from '@/pages/ChiliMap'
 import Growth from '@/pages/Growth'
 import ModelComparison from '@/pages/ModelComparison'
 import EmailVerification from '@/pages/EmailVerification'
+import AboutUs from '@/pages/AboutUs'
 import { useAuthStore } from '@/stores/authStore'
 
 // Protected route wrapper for admin-only pages
@@ -45,6 +46,7 @@ function App() {
       <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
       <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
       <Route path="/verify-email" element={<EmailVerification />} />
+      <Route path="/about" element={<AboutUs />} />
       
       {/* App shell — sidebar + header */}
       <Route element={<AppLayout />}>
@@ -98,7 +100,7 @@ function App() {
         />
         <Route
           path="/model-comparison"
-          element={isAuthenticated ? <ModelComparison /> : <Navigate to="/login" />}
+          element={<AdminRoute><ModelComparison /></AdminRoute>}
         />
         <Route 
           path="/settings" 

@@ -20,8 +20,8 @@
    | Variable | Where to get it |
    |---|---|
    | `MONGODB_URL` | Your MongoDB Atlas connection string |
-   | `ROBOFLOW_API_KEY` | Roboflow project → Settings → API Key (`DUwRRuYzqU2HllvABXDp`) |
-   | `ROBOFLOW_CHILI_SEGMENTATION_API_KEY` | Chili segmentation Roboflow key (`MQR0xXBdPgD0z0g8nBT4`) |
+   | `ROBOFLOW_API_KEY` | Roboflow project → Settings → API Key |
+   | `ROBOFLOW_CHILI_SEGMENTATION_API_KEY` | Chili segmentation Roboflow key |
    | `CLOUDINARY_CLOUD_NAME` | Cloudinary dashboard |
    | `CLOUDINARY_API_KEY` | Cloudinary dashboard |
    | `CLOUDINARY_API_SECRET` | Cloudinary dashboard |
@@ -45,18 +45,18 @@
    - **Health Check Path**: `/health`
 4. **Environment Variables** — add all keys listed in `render.yaml` under `chiliscope-api.envVars`. The most important ones:
    ```
-   MONGODB_URL=mongodb+srv://...
+   MONGODB_URL=<your MongoDB Atlas connection string>
    DATABASE_NAME=chiliscope
    JWT_SECRET_KEY=<generate a strong random string>
    ENVIRONMENT=production
    DEBUG=False
    CORS_ORIGINS=["*"]
-   ROBOFLOW_API_KEY=DUwRRuYzqU2HllvABXDp
-   ROBOFLOW_CHILI_SEGMENTATION_API_KEY=MQR0xXBdPgD0z0g8nBT4
-   CLOUDINARY_CLOUD_NAME=dk5y69min
-   CLOUDINARY_API_KEY=517127826318265
-   CLOUDINARY_API_SECRET=O8fz_RJwSL1bP8v8KLAhIboSzSQ
-   GEMINI_API_KEY=AIzaSyAE_BLd88QhlHfVQDB32S6gtgrGcxvw_AU
+   ROBOFLOW_API_KEY=<your Roboflow API key>
+   ROBOFLOW_CHILI_SEGMENTATION_API_KEY=<your Roboflow segmentation key>
+   CLOUDINARY_CLOUD_NAME=<your Cloudinary cloud name>
+   CLOUDINARY_API_KEY=<your Cloudinary API key>
+   CLOUDINARY_API_SECRET=<your Cloudinary API secret>
+   GEMINI_API_KEY=<your Google Gemini API key>
    FIREBASE_CREDENTIALS_PATH=firebase-credentials.json
    FIREBASE_PROJECT_ID=chiliscope-65628
    ```

@@ -51,6 +51,20 @@ services:
         value: flower-segmentation-brl0m
       - key: ROBOFLOW_SEGMENTATION_MODEL_VERSION
         value: "5"
+      # Roboflow — Maturity Classifier
+      - key: ROBOFLOW_MATURITY_API_KEY
+        sync: false
+      - key: ROBOFLOW_MATURITY_PROJECT_ID
+        value: chili-maturity-classifier
+      - key: ROBOFLOW_MATURITY_MODEL_VERSION
+        value: "2"
+      # Roboflow — Flower Stress Classifier
+      - key: ROBOFLOW_FLOWER_STRESS_API_KEY
+        sync: false
+      - key: ROBOFLOW_FLOWER_STRESS_PROJECT_ID
+        value: chili-flower-stress-class
+      - key: ROBOFLOW_FLOWER_STRESS_MODEL_VERSION
+        value: "1"
       # Firebase
       - key: FIREBASE_CREDENTIALS_PATH
         value: firebase-credentials.json

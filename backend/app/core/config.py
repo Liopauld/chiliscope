@@ -113,18 +113,18 @@ class Settings(BaseSettings):
     lr_model_path: str = "ml/models/linear_regression_shu.joblib"
     
     # Roboflow Configuration
-    roboflow_api_key: str = "DUwRRuYzqU2HllvABXDp"
+    roboflow_api_key: str = ""
     roboflow_project_id: str = "chili-classification-5ohkl"
     roboflow_model_version: str = "7"
     roboflow_use_hosted: bool = True  # True = hosted API, False = local inference
     
     # Chili Segmentation Model (instance segmentation — detects & classifies pods)
-    roboflow_chili_segmentation_api_key: str = "MQR0xXBdPgD0z0g8nBT4"
+    roboflow_chili_segmentation_api_key: str = ""
     roboflow_chili_segmentation_project_id: str = "chili-segmentation-pl3my"
     roboflow_chili_segmentation_model_version: str = "5"
     
     # Chili Maturity Classifier
-    roboflow_maturity_api_key: str = "MQR0xXBdPgD0z0g8nBT4"
+    roboflow_maturity_api_key: str = ""
     roboflow_maturity_project_id: str = "chili-maturity-classifier"
     roboflow_maturity_model_version: str = "2"
 
@@ -133,7 +133,7 @@ class Settings(BaseSettings):
     roboflow_segmentation_model_version: str = "5"
     
     # Flower Stress Classifier (healthy vs moderate_stress)
-    roboflow_flower_stress_api_key: str = "un6pjm40isJ55wu71mP8"
+    roboflow_flower_stress_api_key: str = ""
     roboflow_flower_stress_project_id: str = "chili-flower-stress-class"
     roboflow_flower_stress_model_version: str = "1"
     

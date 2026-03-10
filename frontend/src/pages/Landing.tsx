@@ -99,7 +99,7 @@ const mockRecipes = [
     description: 'Creamy coconut pork stew with siling labuyo',
     prepTime: '45 mins',
     difficulty: 'Medium',
-    image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bicol_Express.jpg/1280px-Bicol_Express.jpg'
   },
   {
     id: 2,
@@ -107,7 +107,7 @@ const mockRecipes = [
     description: 'Taro leaves in spicy coconut milk',
     prepTime: '1 hour',
     difficulty: 'Medium',
-    image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Laing_%28food%29_by_Judgefloro_05.jpg/640px-Laing_%28food%29_by_Judgefloro_05.jpg'
   },
   {
     id: 3,
@@ -115,7 +115,7 @@ const mockRecipes = [
     description: 'Cheese-stuffed long green chili spring rolls',
     prepTime: '30 mins',
     difficulty: 'Easy',
-    image: 'https://images.unsplash.com/photo-1606525437679-037aca74a3e9?w=400'
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Lumpiang_Shanghai_at_Dampa_sa_Libis.jpg/640px-Lumpiang_Shanghai_at_Dampa_sa_Libis.jpg'
   }
 ]
 
@@ -738,6 +738,7 @@ export default function Landing() {
               © 2026 ChiliScope — Technological University of the Philippines Taguig | Developed by Group 9
             </p>
             <div className="flex gap-6 text-xs text-white/40">
+              <Link to="/about" className="hover:text-white/80 transition-colors">About Us</Link>
               <a href="#" className="hover:text-white/80 transition-colors">Privacy</a>
               <a href="#" className="hover:text-white/80 transition-colors">Terms</a>
               <a href="#" className="hover:text-white/80 transition-colors">Contact</a>

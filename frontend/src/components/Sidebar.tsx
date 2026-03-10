@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
   { label: 'Growth Guide', icon: Sprout, to: '/growth', section: 'KNOWLEDGE' },
   // Research
   { label: 'Studies', icon: BookMarked, to: '/studies', section: 'RESEARCH', roles: ['researcher', 'admin'], requiresAuth: true },
-  { label: 'Model Comparison', icon: Brain, to: '/model-comparison', section: 'RESEARCH', roles: ['researcher', 'admin'], requiresAuth: true },
+  { label: 'Model Comparison', icon: Brain, to: '/model-comparison', section: 'RESEARCH', roles: ['admin'], requiresAuth: true },
   // Admin
   { label: 'Admin Panel', icon: Shield, to: '/admin', section: 'ADMIN', roles: ['admin'], requiresAuth: true },
   // Settings
