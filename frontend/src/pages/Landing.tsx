@@ -99,7 +99,7 @@ const mockRecipes = [
     description: 'Creamy coconut pork stew with siling labuyo',
     prepTime: '45 mins',
     difficulty: 'Medium',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bicol_Express.jpg/1280px-Bicol_Express.jpg'
+    image: '/images/bicol_express.jpg'
   },
   {
     id: 2,
@@ -107,7 +107,7 @@ const mockRecipes = [
     description: 'Taro leaves in spicy coconut milk',
     prepTime: '1 hour',
     difficulty: 'Medium',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Laing_%28food%29_by_Judgefloro_05.jpg/640px-Laing_%28food%29_by_Judgefloro_05.jpg'
+    image: '/images/laing.jpg'
   },
   {
     id: 3,
@@ -115,7 +115,7 @@ const mockRecipes = [
     description: 'Cheese-stuffed long green chili spring rolls',
     prepTime: '30 mins',
     difficulty: 'Easy',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Lumpiang_Shanghai_at_Dampa_sa_Libis.jpg/640px-Lumpiang_Shanghai_at_Dampa_sa_Libis.jpg'
+    image: '/images/lumpia.jpg'
   }
 ]
 

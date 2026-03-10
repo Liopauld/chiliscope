@@ -25,7 +25,7 @@ interface CulinaryTip {
 const recipes: Recipe[] = [
   {
     id: '1', title: 'Sinigang na Baboy', description: 'A classic Filipino sour soup with tender pork belly, fresh vegetables, and siling haba for a gentle kick.',
-    image: '/images/haba.webp', prepTime: '20 min', cookTime: '1 hr', servings: 6, difficulty: 'Easy',
+    image: '/images/sinigang.jpg', prepTime: '20 min', cookTime: '1 hr', servings: 6, difficulty: 'Easy',
     heatLevel: 'Mild', category: 'Soup', chiliType: 'Siling Haba',
     ingredients: ['500g pork belly, cut into chunks', '2 medium tomatoes, quartered', '1 large onion, quartered', '3-4 pieces siling haba', '200g kangkong (water spinach)', '2 pieces radish, sliced', '1 pack sinigang mix (tamarind)', '2 tablespoons fish sauce', '6 cups water', '1 eggplant, sliced', 'String beans, cut into 2-inch pieces'],
     instructions: ['Boil water in a large pot. Add pork belly and cook until tender (about 45 minutes).', 'Add tomatoes and onion. Simmer for 5 minutes.', 'Add the sinigang mix and stir to dissolve.', 'Add radish and eggplant. Cook for 5 minutes.', 'Add string beans and siling haba.', 'Season with fish sauce to taste.', 'Add kangkong last. Turn off heat once wilted.', 'Serve hot with steamed rice.'],
@@ -34,7 +34,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '2', title: 'Bicol Express', description: 'A rich and fiery coconut milk stew loaded with siling labuyo, perfect for those who love intense heat with creamy flavor.',
-    image: '/images/labuyo.jfif', prepTime: '15 min', cookTime: '45 min', servings: 4, difficulty: 'Medium',
+    image: '/images/bicol_express.jpg', prepTime: '15 min', cookTime: '45 min', servings: 4, difficulty: 'Medium',
     heatLevel: 'Hot', category: 'Main Dish', chiliType: 'Siling Labuyo',
     ingredients: ['500g pork belly, sliced thin', '400ml coconut milk', '200ml coconut cream', '8-10 pieces siling labuyo', '1 thumb-sized ginger, julienned', '6 cloves garlic, minced', '1 large onion, sliced', '3 tablespoons shrimp paste (bagoong)', '2 tablespoons cooking oil', 'Salt and pepper to taste'],
     instructions: ['Sauté garlic, onion, and ginger in oil until fragrant.', 'Add pork belly and cook until slightly browned.', 'Pour in coconut milk and bring to a simmer.', 'Add shrimp paste and stir well.', 'Add siling labuyo (whole or sliced depending on desired heat).', 'Simmer until pork is tender and sauce thickens, about 30 minutes.', 'Pour in coconut cream and simmer for 5 more minutes.', 'Season with salt and pepper. Serve with rice.'],
@@ -43,7 +43,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '3', title: 'Laing', description: 'Dried taro leaves slow-cooked in coconut milk with siling labuyo, a beloved Bicolano dish full of earthy, spicy, and creamy flavors.',
-    image: '/images/labuyo.jfif', prepTime: '10 min', cookTime: '1 hr', servings: 4, difficulty: 'Medium',
+    image: '/images/laing.jpg', prepTime: '10 min', cookTime: '1 hr', servings: 4, difficulty: 'Medium',
     heatLevel: 'Hot', category: 'Main Dish', chiliType: 'Siling Labuyo',
     ingredients: ['200g dried taro leaves', '400ml coconut milk', '200ml coconut cream', '200g pork belly, diced small', '5-7 pieces siling labuyo', '4 cloves garlic, minced', '1 onion, diced', '2 tablespoons shrimp paste', '1 thumb ginger, sliced', 'Salt to taste'],
     instructions: ['DO NOT stir during cooking — this is crucial!', 'Layer dried taro leaves in a pot.', 'Pour coconut milk over the leaves.', 'Add pork, garlic, onion, ginger, and shrimp paste on top.', 'Add siling labuyo.', 'Bring to a gentle simmer and cook for 45 minutes without stirring.', 'Add coconut cream and cook for 10 more minutes.', 'Gently fold the mixture only when fully cooked. Serve with rice.'],
@@ -52,7 +52,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '4', title: 'Spicy Chicken Adobo', description: 'A fiery twist on the Filipino national dish, combining soy sauce and vinegar braised chicken with siling labuyo heat.',
-    image: '/images/labuyo.jfif', prepTime: '15 min', cookTime: '45 min', servings: 4, difficulty: 'Easy',
+    image: '/images/chicken_adobo.jpg', prepTime: '15 min', cookTime: '45 min', servings: 4, difficulty: 'Easy',
     heatLevel: 'Medium', category: 'Main Dish', chiliType: 'Siling Labuyo',
     ingredients: ['1kg chicken pieces', '1/3 cup soy sauce', '1/3 cup vinegar (cane or coconut)', '1 head garlic, crushed', '3-5 pieces siling labuyo', '3 bay leaves', '1 tablespoon whole peppercorns', '1 tablespoon cooking oil', '1 cup water', 'Salt and sugar to taste'],
     instructions: ['Combine chicken, soy sauce, vinegar, garlic, bay leaves, and peppercorns in a pot.', 'Add water and bring to a boil.', 'Reduce heat and simmer for 30 minutes until chicken is tender.', 'Add siling labuyo and cook for 5 more minutes.', 'Remove chicken pieces and pan-fry in oil until slightly crispy.', 'Reduce the sauce until slightly thick.', 'Return chicken to the pot and coat with sauce.', 'Serve hot with steamed rice.'],
@@ -61,7 +61,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '5', title: 'Ginisang Monggo with Chili', description: 'A hearty mung bean soup elevated with siling haba, a common Friday dish in Filipino households.',
-    image: '/images/haba.webp', prepTime: '10 min', cookTime: '40 min', servings: 6, difficulty: 'Easy',
+    image: '/images/monggo.jpg', prepTime: '10 min', cookTime: '40 min', servings: 6, difficulty: 'Easy',
     heatLevel: 'Mild', category: 'Soup', chiliType: 'Siling Haba',
     ingredients: ['2 cups mung beans, washed', '200g pork, diced', '1 bunch spinach or ampalaya leaves', '3-4 pieces siling haba', '3 cloves garlic, minced', '1 onion, diced', '2 medium tomatoes, diced', '2 tablespoons fish sauce', '6 cups water', '1 tablespoon cooking oil'],
     instructions: ['Boil mung beans in water until soft (about 25 minutes).', 'In a separate pan, sauté garlic, onion, and tomatoes.', 'Add pork and cook until browned.', 'Add sautéed mixture to the mung beans.', 'Add siling haba and fish sauce.', 'Simmer for 10 minutes.', 'Add leafy greens and cook until wilted.', 'Serve hot with rice and fried fish.'],
@@ -70,7 +70,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '6', title: 'Spicy Sisig', description: 'The ultimate Filipino bar food made extra exciting with siling labuyo — crispy, tangy, and blazing hot.',
-    image: '/images/demonyo.jpg', prepTime: '30 min', cookTime: '30 min', servings: 4, difficulty: 'Hard',
+    image: '/images/sisig.jpg', prepTime: '30 min', cookTime: '30 min', servings: 4, difficulty: 'Hard',
     heatLevel: 'Extra Hot', category: 'Appetizer', chiliType: 'Siling Demonyo',
     ingredients: ['500g pig face and ears (or pork belly substitute)', '1/4 cup soy sauce', '1/4 cup vinegar', '5-8 pieces siling labuyo, minced', '4 cloves garlic, minced', '2 onions, finely diced', '2 tablespoons mayonnaise', '1 egg', '2 tablespoons butter', 'Calamansi juice', 'Salt and pepper to taste'],
     instructions: ['Boil pork until tender, then grill until charred.', 'Chop grilled pork finely.', 'Sauté garlic and onion in butter on a sizzling plate.', 'Add chopped pork and stir-fry.', 'Season with soy sauce, vinegar, and calamansi juice.', 'Mix in minced siling labuyo and mayonnaise.', 'Crack an egg on top and mix while sizzling.', 'Serve immediately on the hot plate with extra chilies on the side.'],
@@ -79,7 +79,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '7', title: 'Chili Garlic Oil', description: 'A versatile condiment made with toasted garlic and siling labuyo in oil — perfect drizzled over everything.',
-    image: '/images/labuyo.jfif', prepTime: '10 min', cookTime: '15 min', servings: 12, difficulty: 'Easy',
+    image: '/images/chili_oil.jpg', prepTime: '10 min', cookTime: '15 min', servings: 12, difficulty: 'Easy',
     heatLevel: 'Hot', category: 'Condiment', chiliType: 'Siling Labuyo',
     ingredients: ['1 cup cooking oil (vegetable or canola)', '1 head garlic, minced', '20 pieces siling labuyo, finely chopped', '1 teaspoon salt', '1 teaspoon sugar', '1 tablespoon soy sauce', '1 tablespoon sesame oil (optional)'],
     instructions: ['Heat oil in a pan over medium heat.', 'Add minced garlic and fry until golden (don\'t burn!).', 'Remove from heat and let oil cool for 2 minutes.', 'Add chopped siling labuyo to the warm oil.', 'Add salt, sugar, and soy sauce. Mix well.', 'Add sesame oil if desired.', 'Let it cool completely before transferring to a jar.', 'Store in the refrigerator for up to 2 weeks.'],
@@ -88,7 +88,7 @@ const recipes: Recipe[] = [
   },
   {
     id: '8', title: 'Spicy Mango Shake', description: 'A refreshing Filipino-inspired drink that combines sweet mango with a surprising chili kick.',
-    image: '/images/labuyo.jfif', prepTime: '5 min', cookTime: '0 min', servings: 2, difficulty: 'Easy',
+    image: '/images/mango_shake.jpg', prepTime: '5 min', cookTime: '0 min', servings: 2, difficulty: 'Easy',
     heatLevel: 'Mild', category: 'Beverage', chiliType: 'Siling Labuyo',
     ingredients: ['2 ripe Philippine mangoes (carabao variety)', '1 cup ice', '1/2 cup milk or coconut milk', '2 tablespoons honey', '1 small siling labuyo, deseeded', 'Pinch of salt', 'Chili flakes for garnish'],
     instructions: ['Peel and chop the mangoes.', 'Add mango, ice, milk, and honey to a blender.', 'Add the deseeded siling labuyo.', 'Blend until smooth.', 'Taste and adjust sweetness.', 'Pour into glasses.', 'Garnish with a pinch of chili flakes.', 'Serve immediately.'],

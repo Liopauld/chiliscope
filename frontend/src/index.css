@@ -425,3 +425,52 @@
 .directions-steps-container::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* ================================
+   PRINT STYLES
+   ================================ */
+@media print {
+  /* Hide chrome: sidebar, header, nav buttons */
+  aside, header, nav,
+  button, .no-print,
+  [data-radix-popper-content-wrapper] {
+    display: none !important;
+  }
+
+  /* Full width */
+  body, html {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  main, .page-container {
+    margin: 0 !important;
+    padding: 1rem !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Remove shadows, borders, backgrounds for ink-friendly output */
+  .card, [class*="Card"] {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+  }
+
+  /* Show images */
+  img {
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+
+  /* Remove fixed positioning */
+  * {
+    position: static !important;
+    float: none !important;
+  }
+
+  .page-container {
+    position: relative !important;
+  }
+}

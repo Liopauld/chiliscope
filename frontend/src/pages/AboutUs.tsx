@@ -12,7 +12,7 @@ const developers = [
     phone: '09770035933',
     address: '26-C Ilang-Ilang St., Wawa, Taguig City',
     email: 'pauldominic.syparrado@tup.edu.ph',
-    role: 'Full-Stack Developer',
+    role: 'Developer',
   },
   {
     name: 'Maricarl C. Leaño',
@@ -20,7 +20,7 @@ const developers = [
     phone: '09765387998',
     address: 'Purok 6-C, 12, Jasmin, Lower Bicutan, Taguig City',
     email: 'maricarl.leano@tup.edu.ph',
-    role: 'Frontend Developer',
+    role: 'Developer',
   },
   {
     name: 'Renz Mark A. Madera',
@@ -28,7 +28,7 @@ const developers = [
     phone: '09947407994',
     address: '08 Alagao St. Western Bicutan, Taguig City',
     email: 'renzmark.madera@tup.edu.ph',
-    role: 'Backend Developer',
+    role: 'Developer',
   },
   {
     name: 'Richard Anthony G. Iddurut',
@@ -36,7 +36,7 @@ const developers = [
     phone: '09930065091',
     address: '7110 Kasoy St. Comembo Taguig City',
     emails: ['richardainthony@gmail.com', 'richardanthony.iddurut@tup.edu.ph'],
-    role: 'ML Engineer',
+    role: 'Developer',
   },
 ]
 

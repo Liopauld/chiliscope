@@ -5,6 +5,7 @@ import {
   BookOpen,
   BookMarked,
   ChefHat,
+  Info,
   History,
   Settings,
   Shield,
@@ -44,6 +45,7 @@ const navItems: NavItem[] = [
   { label: 'Market Prices', icon: TrendingDown, to: '/market', section: 'KNOWLEDGE' },
   { label: 'Chili Map', icon: MapPin, to: '/chili-map', section: 'KNOWLEDGE' },
   { label: 'Growth Guide', icon: Sprout, to: '/growth', section: 'KNOWLEDGE' },
+  { label: 'About Us', icon: Info, to: '/about', section: 'KNOWLEDGE' },
   // Research
   { label: 'Studies', icon: BookMarked, to: '/studies', section: 'RESEARCH', roles: ['researcher', 'admin'], requiresAuth: true },
   { label: 'Model Comparison', icon: Brain, to: '/model-comparison', section: 'RESEARCH', roles: ['admin'], requiresAuth: true },

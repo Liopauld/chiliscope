@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   Flame, Leaf, Ruler, Thermometer, ChefHat, AlertTriangle,
-  Download, Share2, ArrowLeft, Save, RotateCcw, Scale, Flower2, Layers,
+  ArrowLeft, Save, RotateCcw, Scale, Flower2, Layers, Printer,
   Sprout, Sun, Droplets, Clock, Calendar, TrendingUp, ShieldCheck,
   CircleDot, Scissors, MapPin, Bug, Heart, Package, Beaker, GitBranch, Zap
 } from 'lucide-react'
@@ -382,8 +382,7 @@ function FlowerResultsLayout({ analysis, navigate }: { analysis: AnalysisResult;
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="icon"><Download className="h-4 w-4" /></Button>
-          <Button variant="ghost" size="icon"><Share2 className="h-4 w-4" /></Button>
+          <Button variant="ghost" size="icon" onClick={() => window.print()} title="Print results"><Printer className="h-4 w-4" /></Button>
         </div>
       </div>
 
@@ -922,8 +921,7 @@ function ChiliResultsLayout({ analysis, navigate }: { analysis: AnalysisResult; 
           </div>
         </div>
         <div className="flex gap-1.5">
-          <Button variant="ghost" size="icon"><Download className="h-4 w-4" /></Button>
-          <Button variant="ghost" size="icon"><Share2 className="h-4 w-4" /></Button>
+          <Button variant="ghost" size="icon" onClick={() => window.print()} title="Print results"><Printer className="h-4 w-4" /></Button>
         </div>
       </div>
 
