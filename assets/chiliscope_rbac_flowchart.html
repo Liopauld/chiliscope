@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ChiliScope — Role-Based Access Flowchart</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+    color: #e5e7eb;
+    min-height: 100vh;
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(15,15,15,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .toolbar h1 {
+    font-size: 1.25rem; font-weight: 700;
+    background: linear-gradient(90deg, #ef4444, #f97316);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .toolbar .subtitle { font-size: 0.75rem; color: #9ca3af; margin-top: 2px; }
+  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px; border-radius: 8px;
+    font-size: 0.8125rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #dc2626, #ea580c);
+    color: #fff;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(220,38,38,0.4); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08); color: #d1d5db;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+  #diagram-container {
+    padding: 40px 20px 60px;
+    display: flex; justify-content: center;
+  }
+  #diagram-container .mermaid {
+    max-width: 100%;
+  }
+  /* Make mermaid subgraph labels bigger */
+  .mermaid .cluster-label { font-size: 15px !important; }
+
+  .legend {
+    max-width: 900px; margin: 0 auto 40px; padding: 0 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0;
+  }
+  .legend-label { font-size: 0.8125rem; }
+
+  .footer {
+    text-align: center; padding: 24px;
+    font-size: 0.7rem; color: #6b7280;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  @media print {
+    .toolbar { position: static; background: #fff; border-bottom: 2px solid #ddd; }
+    .toolbar h1 { -webkit-text-fill-color: #dc2626; }
+    .btn-group { display: none; }
+    body { background: #fff; color: #111; }
+    .legend-item { background: #f9fafb; border-color: #e5e7eb; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <h1>🌶️ ChiliScope — Role-Based Access Control</h1>
+    <div class="subtitle">System access flowchart • Generated March 10, 2026</div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="downloadPNG()">⬇ Download PNG</button>
+    <button class="btn btn-secondary" onclick="downloadSVG()">⬇ Download SVG</button>
+    <button class="btn btn-secondary" onclick="window.print()">🖨 Print</button>
+  </div>
+</div>
+
+<div id="diagram-container">
+  <pre class="mermaid">
+flowchart TD
+    classDef guest fill:#374151,stroke:#9CA3AF,color:#F9FAFB,font-size:13px
+    classDef user fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:13px
+    classDef researcher fill:#3B1F5E,stroke:#8B5CF6,color:#F9FAFB,font-size:13px
+    classDef admin fill:#5C1A1A,stroke:#EF4444,color:#F9FAFB,font-size:13px
+    classDef feature fill:#1F2937,stroke:#4B5563,color:#D1D5DB,font-size:12px
+    classDef public fill:#14532D,stroke:#22C55E,color:#F9FAFB,font-size:12px
+    classDef header fill:#7F1D1D,stroke:#DC2626,color:#FFF,font-size:16px,font-weight:bold
+
+    TITLE["🌶️ ChiliScope<br/>Role-Based Access Control"]:::header
+
+    TITLE --> GUEST
+    TITLE --> USER
+    TITLE --> RESEARCHER
+    TITLE --> ADMIN
+
+    subgraph GUEST["👤 GUEST — No Login Required"]
+        direction TB
+        G1["📖 Encyclopedia<br/>Chili variety database"]:::public
+        G2["🍳 Culinary Guide<br/>8 Filipino recipes"]:::public
+        G3["🌱 Growth Guide<br/>5 growth stages per variety"]:::public
+        G4["📊 Market Prices<br/>Real-time prices & AI forecast"]:::public
+        G5["🗺️ Chili Map<br/>Growing hotspots"]:::public
+        G6["🤖 ChiliBot AI<br/>Gemini-powered chat"]:::public
+        G7["💬 Forum<br/>Read posts & comments"]:::public
+        G8["📰 News & Events<br/>Chili industry updates"]:::public
+        G9["ℹ️ About / Privacy / Terms"]:::public
+        G10["🔬 Quick Classification<br/>Public image analysis"]:::public
+    end
+
+    subgraph USER["🔐 USER — Authenticated Account"]
+        direction TB
+        U1["📤 Upload & Analyze<br/>Full multi-model analysis"]:::feature
+        U2["📚 Analysis Library<br/>Saved results history"]:::feature
+        U3["📊 Dashboard<br/>Personal stats & charts"]:::feature
+        U4["💬 Forum Full Access<br/>Post / Comment / React"]:::feature
+        U5["💡 AI Recommendations<br/>Culinary, market, safety"]:::feature
+        U6["⚙️ Settings<br/>Profile & notifications"]:::feature
+        U7["🔔 Push Notifications<br/>FCM real-time alerts"]:::feature
+        U8["🖼️ Batch Analysis<br/>Multi-image processing"]:::feature
+    end
+
+    subgraph RESEARCHER["🔬 RESEARCHER — Inherits All User Features"]
+        direction TB
+        R1["📑 Studies & References<br/>20 research papers"]:::feature
+        R2["📈 Analytics Dashboard<br/>System-wide metrics"]:::feature
+        R3["🧪 Model Accuracy<br/>Precision, recall, F1"]:::feature
+        R4["📊 Trends<br/>Sample & prediction trends"]:::feature
+        R5["👥 User Activity<br/>Activity monitoring"]:::feature
+        R6["🌡️ Heat Distribution<br/>SHU analytics"]:::feature
+        R7["🔍 Model Performance<br/>Compare ML models"]:::feature
+    end
+
+    subgraph ADMIN["🛡️ ADMIN — Full System Access"]
+        direction TB
+        A1["👥 User Management<br/>Ban / unban / deactivate"]:::feature
+        A2["🤖 ML Training<br/>Train & deploy models"]:::feature
+        A3["💰 Price Management<br/>CRUD & seed market data"]:::feature
+        A4["📄 Export Reports<br/>PDF & Excel generation"]:::feature
+        A5["🧠 AI Interpretation<br/>Auto-generate reports"]:::feature
+        A6["⚙️ System Config<br/>Platform settings"]:::feature
+        A7["📊 Admin Panel<br/>5-tab overview"]:::feature
+    end
+
+    GUEST -.->|"Register / Login"| USER
+    USER -.->|"Role Promotion"| RESEARCHER
+    RESEARCHER -.->|"Role Promotion"| ADMIN
+  </pre>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#14532D;border:2px solid #22C55E"></div>
+    <span class="legend-label"><strong>Public</strong> — No login needed</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#1F2937;border:2px solid #4B5563"></div>
+    <span class="legend-label"><strong>Protected</strong> — Login required</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#3B1F5E;border:2px solid #8B5CF6"></div>
+    <span class="legend-label"><strong>Researcher</strong> — Research role</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#5C1A1A;border:2px solid #EF4444"></div>
+    <span class="legend-label"><strong>Admin</strong> — Full privileges</span>
+  </div>
+</div>
+
+<div class="footer">
+  © 2026 ChiliScope — Technological University of the Philippines – Taguig | Group 9 Capstone Project
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#0f0f0f',
+      primaryColor: '#1E3A5F',
+      primaryTextColor: '#F9FAFB',
+      lineColor: '#6B7280',
+      fontSize: '14px',
+    },
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'basis',
+      padding: 20,
+    }
+  });
+
+  async function downloadPNG() {
+    const el = document.getElementById('diagram-container');
+    const canvas = await html2canvas(el, {
+      backgroundColor: '#0f0f0f',
+      scale: 3,
+      useCORS: true,
+    });
+    const link = document.createElement('a');
+    link.download = 'ChiliScope_RBAC_Flowchart.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  function downloadSVG() {
+    const svg = document.querySelector('#diagram-container svg');
+    if (!svg) { alert('Diagram not rendered yet. Please wait and try again.'); return; }
+    const clone = svg.cloneNode(true);
+    clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    // inject dark background
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('width', '100%');
+    rect.setAttribute('height', '100%');
+    rect.setAttribute('fill', '#0f0f0f');
+    clone.insertBefore(rect, clone.firstChild);
+    const blob = new Blob([clone.outerHTML], { type: 'image/svg+xml' });
+    const link = document.createElement('a');
+    link.download = 'ChiliScope_RBAC_Flowchart.svg';
+    link.href = URL.createObjectURL(blob);
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ChiliScope — DFD Level 1, Level 2 & Use Case Diagram</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);color:#e5e7eb;min-height:100vh}
+  .toolbar{position:sticky;top:0;z-index:50;background:rgba(15,15,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .toolbar h1{font-size:1.25rem;font-weight:700;background:linear-gradient(90deg,#ef4444,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .toolbar .sub{font-size:.75rem;color:#9ca3af;margin-top:2px}
+  .bg{display:flex;gap:8px;flex-wrap:wrap}
+  .b{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:.8125rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+  .bp{background:linear-gradient(135deg,#dc2626,#ea580c);color:#fff}
+  .bp:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(220,38,38,.4)}
+  .bs{background:rgba(255,255,255,.08);color:#d1d5db;border:1px solid rgba(255,255,255,.15)}
+  .bs:hover{background:rgba(255,255,255,.14)}
+  .tabs{display:flex;gap:4px;padding:8px 32px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto}
+  .tab{padding:10px 20px;border-radius:8px 8px 0 0;font-size:.8125rem;font-weight:600;cursor:pointer;background:0 0;color:#9ca3af;border:none;transition:all .2s;white-space:nowrap}
+  .tab:hover{color:#e5e7eb;background:rgba(255,255,255,.05)}
+  .tab.active{background:rgba(255,255,255,.08);color:#fff;border-bottom:2px solid #ef4444}
+  .sec{display:none;padding:40px 20px 60px}
+  .sec.active{display:block}
+  .sec h2{text-align:center;font-size:1.1rem;color:#9ca3af;margin-bottom:24px;font-weight:400}
+  .dw{display:flex;justify-content:center;overflow-x:auto}
+  .dw .mermaid{min-width:600px}
+  .legend{max-width:960px;margin:32px auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  .li{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:.78rem}
+  .ls{width:30px;height:20px;border-radius:4px;flex-shrink:0}
+  .footer{text-align:center;padding:24px;font-size:.7rem;color:#6b7280;border-top:1px solid rgba(255,255,255,.06)}
+  @media print{.toolbar{position:static;background:#fff}.toolbar h1{-webkit-text-fill-color:#dc2626}.bg,.tabs{display:none}body{background:#fff;color:#111}.sec{display:block!important;page-break-before:always}.li{background:#f9fafb;border-color:#e5e7eb}}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <h1>🌶️ ChiliScope — System Diagrams</h1>
+    <div class="sub">DFD Level 1 • DFD Level 2 • Use Case Diagram • March 10, 2026</div>
+  </div>
+  <div class="bg">
+    <button class="b bp" onclick="dlPNG()">⬇ Download PNG</button>
+    <button class="b bs" onclick="dlSVG()">⬇ Download SVG</button>
+    <button class="b bs" onclick="window.print()">🖨 Print All</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('l1',this)">Level 1 DFD</button>
+  <button class="tab" onclick="show('l2',this)">Level 2 DFD</button>
+  <button class="tab" onclick="show('uc',this)">Use Case Diagram</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- LEVEL 1 DFD                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="tab-l1" class="sec active">
+  <h2>Level 1 Data Flow Diagram — Major Processes</h2>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart TB
+    classDef entity fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:12px
+    classDef process fill:#7F1D1D,stroke:#EF4444,color:#FFF,font-size:12px
+    classDef store fill:#312E81,stroke:#818CF8,color:#F9FAFB,font-size:11px
+    classDef ext fill:#14532D,stroke:#22C55E,color:#F9FAFB,font-size:11px
+
+    GUEST["👤 Guest"]:::entity
+    USER["🔐 User"]:::entity
+    RES["🔬 Researcher"]:::entity
+    ADMIN["🛡️ Admin"]:::entity
+
+    FB["🔥 Firebase Auth"]:::ext
+    CLD["☁️ Cloudinary"]:::ext
+    GEM["🤖 Google Gemini"]:::ext
+    RBF["🔬 Roboflow"]:::ext
+
+    P1(("1.0<br/>Authentication")):::process
+    P2(("2.0<br/>Image<br/>Management")):::process
+    P3(("3.0<br/>Chili Analysis<br/>& ML")):::process
+    P4(("4.0<br/>Market Price<br/>System")):::process
+    P5(("5.0<br/>ChiliBot<br/>AI Chat")):::process
+    P6(("6.0<br/>Community<br/>Forum")):::process
+    P7(("7.0<br/>Knowledge<br/>Base")):::process
+    P8(("8.0<br/>Analytics &<br/>Reporting")):::process
+    P9(("9.0<br/>Admin &<br/>Config")):::process
+
+    D1[("D1 Users")]:::store
+    D2[("D2 Samples")]:::store
+    D3[("D3 Predictions")]:::store
+    D4[("D4 Prices")]:::store
+    D5[("D5 Forum Posts")]:::store
+    D6[("D6 Notifications")]:::store
+    D7[("D7 ML Models")]:::store
+
+    GUEST -->|"Credentials /<br/>Google OAuth"| P1
+    P1 <-->|"Verify token"| FB
+    P1 <-->|"User record"| D1
+    P1 -->|"JWT token"| USER
+
+    USER -->|"Chili images"| P2
+    P2 <-->|"Store images"| CLD
+    P2 -->|"Sample record"| D2
+    P2 -->|"Image data"| P3
+
+    GUEST -->|"Quick classify"| P3
+    USER -->|"Full analysis"| P3
+    P3 <-->|"CNN classify"| RBF
+    P3 <-->|"Model weights"| D7
+    P3 -->|"Results"| D3
+    P3 -->|"Analysis output"| USER
+
+    GUEST -->|"View prices"| P4
+    ADMIN -->|"Seed / edit prices"| P4
+    P4 <-->|"Price records"| D4
+    P4 -->|"Prices, trends,<br/>predictions"| GUEST
+
+    GUEST -->|"Chat query"| P5
+    P5 <-->|"Prompt /<br/>completion"| GEM
+    P5 -->|"AI response"| GUEST
+
+    GUEST -->|"Browse posts"| P6
+    USER -->|"Post / comment /<br/>react"| P6
+    P6 <-->|"Post CRUD"| D5
+    P6 -->|"Notifications"| D6
+    D6 -->|"Push alerts"| USER
+    P6 <-->|"Forum images"| CLD
+
+    GUEST -->|"Browse guides"| P7
+    P7 -->|"Encyclopedia,<br/>culinary, growth"| GUEST
+
+    RES -->|"Request analytics"| P8
+    P8 <-->|"Aggregate data"| D3
+    P8 <-->|"User metrics"| D1
+    P8 <-->|"Model metrics"| D7
+    P8 -->|"Reports, charts"| RES
+    P8 -->|"PDF / Excel"| ADMIN
+
+    ADMIN -->|"Manage system"| P9
+    P9 <-->|"User roles,<br/>ban / unban"| D1
+    P9 <-->|"Train / deploy"| D7
+    P9 <-->|"AI interpret"| GEM
+    P9 -->|"Config status"| ADMIN
+    </pre>
+  </div>
+
+  <div class="legend">
+    <div class="li"><div class="ls" style="background:#1E3A5F;border:2px solid #3B82F6"></div><strong>Entity</strong> — Actor / user role</div>
+    <div class="li"><div class="ls" style="background:#7F1D1D;border:2px solid #EF4444;border-radius:50%"></div><strong>Process</strong> — System function</div>
+    <div class="li"><div class="ls" style="background:#312E81;border:2px solid #818CF8"></div><strong>Data Store</strong> — Database collection</div>
+    <div class="li"><div class="ls" style="background:#14532D;border:2px solid #22C55E"></div><strong>External</strong> — Third-party service</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- LEVEL 2 DFD                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="tab-l2" class="sec">
+  <h2>Level 2 Data Flow Diagram — Decomposed Sub-Processes</h2>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart TB
+    classDef entity fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:11px
+    classDef process fill:#7F1D1D,stroke:#EF4444,color:#FFF,font-size:11px
+    classDef sub fill:#4C1D1D,stroke:#F87171,color:#FFF,font-size:10px
+    classDef store fill:#312E81,stroke:#818CF8,color:#F9FAFB,font-size:10px
+    classDef ext fill:#14532D,stroke:#22C55E,color:#F9FAFB,font-size:10px
+
+    GUEST["👤 Guest"]:::entity
+    USER["🔐 User"]:::entity
+    RES["🔬 Researcher"]:::entity
+    ADMIN["🛡️ Admin"]:::entity
+    FB["🔥 Firebase"]:::ext
+    CLD["☁️ Cloudinary"]:::ext
+    GEM["🤖 Gemini"]:::ext
+    RBF["🔬 Roboflow"]:::ext
+
+    D1[("D1 Users")]:::store
+    D2[("D2 Samples")]:::store
+    D3[("D3 Predictions")]:::store
+    D4[("D4 Prices")]:::store
+    D5[("D5 Forum")]:::store
+    D6[("D6 Notifs")]:::store
+    D7[("D7 Models")]:::store
+    D8[("D8 Recommendations")]:::store
+
+    subgraph AUTH["1.0 Authentication"]
+        direction LR
+        P1_1(("1.1<br/>Register")):::sub
+        P1_2(("1.2<br/>Login /<br/>Firebase")):::sub
+        P1_3(("1.3<br/>Token<br/>Refresh")):::sub
+        P1_4(("1.4<br/>Password<br/>Change")):::sub
+    end
+
+    GUEST -->|"Name, email,<br/>password"| P1_1
+    GUEST -->|"Credentials /<br/>Google OAuth"| P1_2
+    P1_1 -->|"Create user"| D1
+    P1_2 <-->|"Verify ID token"| FB
+    P1_2 -->|"Lookup / create"| D1
+    P1_1 -->|"JWT"| USER
+    P1_2 -->|"JWT"| USER
+    USER -->|"Expired token"| P1_3
+    P1_3 -->|"New JWT"| USER
+    USER -->|"Old + new pwd"| P1_4
+    P1_4 <-->|"Update hash"| D1
+
+    subgraph IMG["2.0 Image Management"]
+        direction LR
+        P2_1(("2.1<br/>Single<br/>Upload")):::sub
+        P2_2(("2.2<br/>Batch<br/>Upload")):::sub
+        P2_3(("2.3<br/>Image<br/>Retrieval")):::sub
+        P2_4(("2.4<br/>Image<br/>Delete")):::sub
+    end
+
+    USER -->|"Image file"| P2_1
+    USER -->|"Multiple files"| P2_2
+    P2_1 <-->|"Upload to CDN"| CLD
+    P2_2 <-->|"Batch upload"| CLD
+    P2_1 -->|"URL + metadata"| D2
+    P2_2 -->|"URLs + metadata"| D2
+    USER -->|"Sample ID"| P2_3
+    P2_3 -->|"Image URLs"| D2
+    P2_3 -->|"Image list"| USER
+    USER -->|"Delete request"| P2_4
+    P2_4 -->|"Remove record"| D2
+
+    subgraph ANALYSIS["3.0 Chili Analysis & ML"]
+        direction LR
+        P3_1(("3.1<br/>Variety<br/>Classify")):::sub
+        P3_2(("3.2<br/>SHU<br/>Predict")):::sub
+        P3_3(("3.3<br/>Maturity<br/>Assess")):::sub
+        P3_4(("3.4<br/>Health /<br/>Stress")):::sub
+        P3_5(("3.5<br/>Pod<br/>Segment")):::sub
+        P3_6(("3.6<br/>Full<br/>Analysis")):::sub
+    end
+
+    GUEST -->|"Image"| P3_1
+    P3_1 <-->|"CNN classify"| RBF
+    P3_1 -->|"Variety + conf."| GUEST
+    USER -->|"Color features"| P3_2
+    P3_2 <-->|"LR / RF / Ensemble"| D7
+    P3_2 -->|"SHU value"| USER
+    USER -->|"Image"| P3_3
+    P3_3 <-->|"Decision Tree"| D7
+    P3_3 -->|"Maturity stage"| USER
+    USER -->|"Image"| P3_4
+    P3_4 <-->|"Flower stress"| RBF
+    P3_4 -->|"Health status"| USER
+    USER -->|"Image"| P3_5
+    P3_5 <-->|"Segmentation"| RBF
+    P3_5 -->|"Pod count,<br/>measurements"| USER
+    USER -->|"Sample ID"| P3_6
+    P3_6 -->|"Orchestrate<br/>3.1–3.5"| P3_1
+    P3_6 -->|"Combined results"| D3
+    P3_6 -->|"Full report"| USER
+
+    subgraph MARKET["4.0 Market Price System"]
+        direction LR
+        P4_1(("4.1<br/>Price<br/>History")):::sub
+        P4_2(("4.2<br/>Current<br/>Prices")):::sub
+        P4_3(("4.3<br/>Price<br/>Predict")):::sub
+        P4_4(("4.4<br/>Price<br/>Analytics")):::sub
+        P4_5(("4.5<br/>Seed /<br/>CRUD")):::sub
+    end
+
+    GUEST -->|"View history"| P4_1
+    P4_1 <-->|"Query records"| D4
+    P4_1 -->|"Trend data"| GUEST
+    GUEST -->|"Latest prices"| P4_2
+    P4_2 <-->|"Most recent"| D4
+    P4_2 -->|"3 varieties"| GUEST
+    GUEST -->|"Forecast request"| P4_3
+    P4_3 <-->|"RF model"| D7
+    P4_3 <-->|"Historical"| D4
+    P4_3 -->|"7–90 day forecast"| GUEST
+    RES -->|"Analytics query"| P4_4
+    P4_4 <-->|"Aggregations"| D4
+    P4_4 -->|"Stats, charts"| RES
+    ADMIN -->|"Excel data /<br/>manual entry"| P4_5
+    P4_5 -->|"Insert / update"| D4
+
+    subgraph CHAT["5.0 ChiliBot AI Chat"]
+        direction LR
+        P5_1(("5.1<br/>Process<br/>Query")):::sub
+        P5_2(("5.2<br/>Generate<br/>Response")):::sub
+        P5_3(("5.3<br/>Suggest<br/>Follow-ups")):::sub
+    end
+
+    GUEST -->|"Chat message"| P5_1
+    P5_1 -->|"Formatted prompt<br/>+ context"| P5_2
+    P5_2 <-->|"Gemini completion"| GEM
+    P5_2 -->|"AI reply"| P5_3
+    P5_3 -->|"Response +<br/>3 suggestions"| GUEST
+
+    subgraph FORUM["6.0 Community Forum"]
+        direction LR
+        P6_1(("6.1<br/>Post<br/>CRUD")):::sub
+        P6_2(("6.2<br/>Comment<br/>CRUD")):::sub
+        P6_3(("6.3<br/>Reactions")):::sub
+        P6_4(("6.4<br/>Notify")):::sub
+        P6_5(("6.5<br/>Media<br/>Upload")):::sub
+    end
+
+    GUEST -->|"Browse / search"| P6_1
+    USER -->|"Create / edit /<br/>delete post"| P6_1
+    P6_1 <-->|"Post records"| D5
+    P6_1 -->|"Post feed"| GUEST
+    USER -->|"Write comment"| P6_2
+    P6_2 <-->|"Comment records"| D5
+    USER -->|"Like / love /<br/>fire / insight"| P6_3
+    P6_3 <-->|"Reaction counts"| D5
+    P6_1 -->|"New post event"| P6_4
+    P6_2 -->|"Reply event"| P6_4
+    P6_4 -->|"Push notification"| D6
+    D6 -->|"FCM alert"| USER
+    USER -->|"Image file"| P6_5
+    P6_5 <-->|"Upload"| CLD
+    P6_5 -->|"Image URL"| P6_1
+
+    subgraph ANALYTICS["8.0 Analytics & Reporting"]
+        direction LR
+        P8_1(("8.1<br/>Sample<br/>Trends")):::sub
+        P8_2(("8.2<br/>Prediction<br/>Accuracy")):::sub
+        P8_3(("8.3<br/>User<br/>Activity")):::sub
+        P8_4(("8.4<br/>Heat<br/>Distribution")):::sub
+        P8_5(("8.5<br/>Export<br/>Reports")):::sub
+    end
+
+    RES -->|"Request trends"| P8_1
+    P8_1 <-->|"Aggregate"| D2
+    P8_1 -->|"Charts"| RES
+    RES -->|"Accuracy query"| P8_2
+    P8_2 <-->|"Metrics"| D3
+    P8_2 <-->|"Model data"| D7
+    P8_2 -->|"Precision, recall"| RES
+    RES -->|"Activity query"| P8_3
+    P8_3 <-->|"User logs"| D1
+    P8_3 -->|"Activity reports"| RES
+    RES -->|"Distribution query"| P8_4
+    P8_4 <-->|"SHU data"| D3
+    P8_4 -->|"Heat charts"| RES
+    ADMIN -->|"Export request"| P8_5
+    P8_5 -->|"Gather all data"| P8_1
+    P8_5 -->|"PDF / Excel file"| ADMIN
+
+    subgraph ADMINSYS["9.0 Admin & Configuration"]
+        direction LR
+        P9_1(("9.1<br/>User<br/>Manage")):::sub
+        P9_2(("9.2<br/>Model<br/>Train")):::sub
+        P9_3(("9.3<br/>Model<br/>Deploy")):::sub
+        P9_4(("9.4<br/>AI Report<br/>Interpret")):::sub
+    end
+
+    ADMIN -->|"Ban / unban /<br/>role change"| P9_1
+    P9_1 <-->|"Update user"| D1
+    P9_1 -->|"Status result"| ADMIN
+    ADMIN -->|"Train request"| P9_2
+    P9_2 -->|"New weights"| D7
+    P9_2 -->|"Training metrics"| ADMIN
+    ADMIN -->|"Deploy model"| P9_3
+    P9_3 <-->|"Activate version"| D7
+    P9_3 -->|"Deploy status"| ADMIN
+    ADMIN -->|"Report data"| P9_4
+    P9_4 <-->|"Interpret"| GEM
+    P9_4 -->|"AI summary"| ADMIN
+
+    subgraph RECS["7.0 Recommendations"]
+        direction LR
+        P7_1(("7.1<br/>Generate<br/>Recs")):::sub
+        P7_2(("7.2<br/>Feedback")):::sub
+    end
+
+    USER -->|"Sample ID"| P7_1
+    P7_1 <-->|"Analysis data"| D3
+    P7_1 <-->|"AI generation"| GEM
+    P7_1 -->|"Culinary, market,<br/>safety recs"| D8
+    D8 -->|"Recommendations"| USER
+    USER -->|"Rating"| P7_2
+    P7_2 -->|"Update score"| D8
+    </pre>
+  </div>
+
+  <div class="legend">
+    <div class="li"><div class="ls" style="background:#1E3A5F;border:2px solid #3B82F6"></div><strong>Entity</strong> — Actor</div>
+    <div class="li"><div class="ls" style="background:#7F1D1D;border:2px solid #EF4444;border-radius:50%"></div><strong>Process</strong> — Major (1.0–9.0)</div>
+    <div class="li"><div class="ls" style="background:#4C1D1D;border:2px solid #F87171;border-radius:50%"></div><strong>Sub-Process</strong> — Decomposed</div>
+    <div class="li"><div class="ls" style="background:#312E81;border:2px solid #818CF8"></div><strong>Data Store</strong> — Collection</div>
+    <div class="li"><div class="ls" style="background:#14532D;border:2px solid #22C55E"></div><strong>External</strong> — Third-party</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- USE CASE DIAGRAM                                   -->
+<!-- ══════════════════════════════════════════════════ -->
+<div id="tab-uc" class="sec">
+  <h2>Use Case Diagram — Actor–Feature Relationships</h2>
+
+  <!-- Guest Use Cases -->
+  <h3 style="text-align:center;color:#22C55E;font-size:.95rem;margin:20px 0 12px">Guest — Public Access (No Login Required)</h3>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart LR
+    classDef actor fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:13px
+    classDef uc fill:#14532D,stroke:#22C55E,color:#F9FAFB,font-size:12px
+    classDef ext fill:#0F3325,stroke:#16A34A,color:#A7F3D0,font-size:11px
+
+    GUEST["👤 Guest<br/>User"]:::actor
+
+    subgraph SYS1[" "]
+        UC1(["Browse Encyclopedia"]):::uc
+        UC2(["View Culinary Guide"]):::uc
+        UC3(["View Growth Guide"]):::uc
+        UC4(["View Market Prices"]):::uc
+        UC5(["AI Price Prediction"]):::uc
+        UC6(["Explore Chili Map"]):::uc
+        UC7(["Chat with ChiliBot"]):::uc
+        UC8(["Browse Forum Posts"]):::uc
+        UC9(["Quick Classify Image"]):::uc
+        UC10(["View News & Events"]):::uc
+    end
+
+    EXT1["🤖 Gemini AI"]:::ext
+    EXT2["🔬 Roboflow"]:::ext
+
+    GUEST --- UC1
+    GUEST --- UC2
+    GUEST --- UC3
+    GUEST --- UC4
+    GUEST --- UC5
+    GUEST --- UC6
+    GUEST --- UC7
+    GUEST --- UC8
+    GUEST --- UC9
+    GUEST --- UC10
+
+    UC5 -.->|"extends"| UC4
+    UC7 -.->|"includes"| EXT1
+    UC9 -.->|"includes"| EXT2
+    </pre>
+  </div>
+
+  <!-- User Use Cases -->
+  <h3 style="text-align:center;color:#3B82F6;font-size:.95rem;margin:30px 0 12px">Authenticated User — Login Required</h3>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart LR
+    classDef actor fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:13px
+    classDef uc fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:12px
+    classDef ext fill:#0F3325,stroke:#16A34A,color:#A7F3D0,font-size:11px
+
+    USER["🔐 Authenticated<br/>User"]:::actor
+
+    subgraph SYS2[" "]
+        UC11(["Register Account"]):::uc
+        UC12(["Login / Google Sign-In"]):::uc
+        UC13(["Upload Chili Images"]):::uc
+        UC14(["Run Full Analysis"]):::uc
+        UC15(["View Analysis Library"]):::uc
+        UC16(["View Dashboard"]):::uc
+        UC17(["Create Forum Post"]):::uc
+        UC18(["Comment and React"]):::uc
+        UC19(["Receive Notifications"]):::uc
+        UC20(["Get AI Recommendations"]):::uc
+        UC21(["Manage Profile"]):::uc
+        UC22(["Batch Image Analysis"]):::uc
+    end
+
+    EXT3["🔥 Firebase Auth"]:::ext
+    EXT4["☁️ Cloudinary"]:::ext
+
+    USER --- UC11
+    USER --- UC12
+    USER --- UC13
+    USER --- UC14
+    USER --- UC15
+    USER --- UC16
+    USER --- UC17
+    USER --- UC18
+    USER --- UC19
+    USER --- UC20
+    USER --- UC21
+    USER --- UC22
+
+    UC12 -.->|"includes"| EXT3
+    UC13 -.->|"includes"| EXT4
+    UC14 -.->|"includes"| UC13
+    UC22 -.->|"extends"| UC14
+    UC20 -.->|"includes"| UC14
+    UC18 -.->|"extends"| UC17
+    UC19 -.->|"extends"| UC18
+    </pre>
+  </div>
+
+  <!-- Researcher Use Cases -->
+  <h3 style="text-align:center;color:#8B5CF6;font-size:.95rem;margin:30px 0 12px">Researcher — Research Role Access</h3>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart LR
+    classDef actor fill:#3B1F5E,stroke:#8B5CF6,color:#F9FAFB,font-size:13px
+    classDef uc fill:#3B1F5E,stroke:#8B5CF6,color:#F9FAFB,font-size:12px
+
+    RES["🔬 Researcher"]:::actor
+
+    subgraph SYS3[" "]
+        UC23(["View Studies Page"]):::uc
+        UC24(["Analytics Dashboard"]):::uc
+        UC25(["Model Accuracy Metrics"]):::uc
+        UC26(["Sample and Prediction Trends"]):::uc
+        UC27(["User Activity Reports"]):::uc
+        UC28(["Heat Distribution Data"]):::uc
+        UC29(["Model Comparison"]):::uc
+    end
+
+    RES --- UC23
+    RES --- UC24
+    RES --- UC25
+    RES --- UC26
+    RES --- UC27
+    RES --- UC28
+    RES --- UC29
+    </pre>
+  </div>
+
+  <!-- Admin Use Cases -->
+  <h3 style="text-align:center;color:#EF4444;font-size:.95rem;margin:30px 0 12px">Admin — Full System Control</h3>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart LR
+    classDef actor fill:#5C1A1A,stroke:#EF4444,color:#F9FAFB,font-size:13px
+    classDef uc fill:#5C1A1A,stroke:#EF4444,color:#F9FAFB,font-size:12px
+    classDef ext fill:#0F3325,stroke:#16A34A,color:#A7F3D0,font-size:11px
+
+    ADMIN["🛡️ Admin"]:::actor
+
+    subgraph SYS4[" "]
+        UC30(["Ban / Unban Users"]):::uc
+        UC31(["Manage User Roles"]):::uc
+        UC32(["Train ML Models"]):::uc
+        UC33(["Deploy ML Models"]):::uc
+        UC34(["Seed Market Prices"]):::uc
+        UC35(["Export PDF / Excel"]):::uc
+        UC36(["AI Report Interpret"]):::uc
+        UC37(["System Configuration"]):::uc
+    end
+
+    EXT5["🤖 Gemini AI"]:::ext
+    EXT6["🔬 Roboflow"]:::ext
+
+    ADMIN --- UC30
+    ADMIN --- UC31
+    ADMIN --- UC32
+    ADMIN --- UC33
+    ADMIN --- UC34
+    ADMIN --- UC35
+    ADMIN --- UC36
+    ADMIN --- UC37
+
+    UC36 -.->|"includes"| EXT5
+    UC32 -.->|"includes"| EXT6
+    UC35 -.->|"includes"| UC36
+    </pre>
+  </div>
+
+  <!-- Role Inheritance -->
+  <h3 style="text-align:center;color:#F97316;font-size:.95rem;margin:30px 0 12px">Role Inheritance — Access Escalation</h3>
+  <div class="dw">
+    <pre class="mermaid">
+flowchart LR
+    classDef g fill:#14532D,stroke:#22C55E,color:#F9FAFB,font-size:13px
+    classDef u fill:#1E3A5F,stroke:#3B82F6,color:#F9FAFB,font-size:13px
+    classDef r fill:#3B1F5E,stroke:#8B5CF6,color:#F9FAFB,font-size:13px
+    classDef a fill:#5C1A1A,stroke:#EF4444,color:#F9FAFB,font-size:13px
+
+    G["👤 Guest<br/>10 use cases"]:::g
+    U["🔐 User<br/>+12 use cases<br/>= 22 total"]:::u
+    R["🔬 Researcher<br/>+7 use cases<br/>= 29 total"]:::r
+    A["🛡️ Admin<br/>+8 use cases<br/>= 37 total"]:::a
+
+    G ==>|"Register /<br/>Login"| U
+    U ==>|"Role<br/>Promotion"| R
+    R ==>|"Role<br/>Promotion"| A
+    </pre>
+  </div>
+
+  <div class="legend">
+    <div class="li"><div class="ls" style="background:#14532D;border:2px solid #22C55E;border-radius:12px"></div><strong>Public</strong> — No auth needed (10)</div>
+    <div class="li"><div class="ls" style="background:#1E3A5F;border:2px solid #3B82F6;border-radius:12px"></div><strong>User</strong> — Login required (12)</div>
+    <div class="li"><div class="ls" style="background:#3B1F5E;border:2px solid #8B5CF6;border-radius:12px"></div><strong>Researcher</strong> — Research role (7)</div>
+    <div class="li"><div class="ls" style="background:#5C1A1A;border:2px solid #EF4444;border-radius:12px"></div><strong>Admin</strong> — Admin only (8)</div>
+    <div class="li"><div class="ls" style="background:#0F3325;border:2px solid #16A34A"></div><strong>External</strong> — Third-party service</div>
+    <div class="li"><div class="ls" style="background:transparent;border:2px dashed #6B7280"></div><strong>Dashed</strong> — includes / extends</div>
+  </div>
+</div>
+
+<div class="footer">
+  © 2026 ChiliScope — Technological University of the Philippines – Taguig | Group 9 Capstone Project
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad:true, theme:'dark',
+    themeVariables:{darkMode:true,background:'#0f0f0f',primaryColor:'#1E3A5F',primaryTextColor:'#F9FAFB',lineColor:'#6B7280',fontSize:'13px'},
+    flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis',padding:16}
+  });
+
+  function show(id,el){
+    document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  async function dlPNG(){
+    const a=document.querySelector('.sec.active');
+    const c=await html2canvas(a,{backgroundColor:'#0f0f0f',scale:3,useCORS:true});
+    const l=document.createElement('a');
+    const n={l1:'Level1_DFD',l2:'Level2_DFD',uc:'Use_Case_Diagram'}[a.id.replace('tab-','')];
+    l.download='ChiliScope_'+n+'.png';l.href=c.toDataURL('image/png');l.click();
+  }
+
+  function dlSVG(){
+    const a=document.querySelector('.sec.active');
+    const svg=a.querySelector('svg');
+    if(!svg){alert('Diagram not rendered yet.');return;}
+    const cl=svg.cloneNode(true);
+    cl.setAttribute('xmlns','http://www.w3.org/2000/svg');
+    const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('width','100%');r.setAttribute('height','100%');r.setAttribute('fill','#0f0f0f');
+    cl.insertBefore(r,cl.firstChild);
+    const b=new Blob([cl.outerHTML],{type:'image/svg+xml'});
+    const l=document.createElement('a');
+    const n={l1:'Level1_DFD',l2:'Level2_DFD',uc:'Use_Case_Diagram'}[a.id.replace('tab-','')];
+    l.download='ChiliScope_'+n+'.svg';l.href=URL.createObjectURL(b);l.click();URL.revokeObjectURL(l.href);
+  }
+</script>
+</body>
+</html>
