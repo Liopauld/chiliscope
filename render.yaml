@@ -36,7 +36,7 @@ services:
       - key: ROBOFLOW_PROJECT_ID
         value: chili-classification-5ohkl
       - key: ROBOFLOW_MODEL_VERSION
-        value: "5"
+        value: "9"
       - key: ROBOFLOW_USE_HOSTED
         value: "true"
       # Roboflow — Chili Segmentation

@@ -330,11 +330,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-foreground-muted/30 rounded-full;
+  background: color-mix(in srgb, var(--color-foreground-muted) 30%, transparent);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-foreground-muted/50;
+  background: color-mix(in srgb, var(--color-foreground-muted) 50%, transparent);
 }
 
 /* Sidebar scrollbar */

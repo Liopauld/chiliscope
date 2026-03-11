@@ -1049,7 +1049,7 @@ function ChiliResultsLayout({ analysis, navigate }: { analysis: AnalysisResult; 
                   <span className="text-foreground-muted">{((1 - analysis.confidence) * 100).toFixed(0)}%</span>
                 </div>
                 <div className="h-2.5 bg-surface rounded-full overflow-hidden">
-                  <div className="h-full bg-foreground-muted/40 rounded-full transition-all duration-500" style={{ width: `${(1 - analysis.confidence) * 100}%` }} />
+                  <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(1 - analysis.confidence) * 100}%`, background: 'color-mix(in srgb, var(--color-foreground-muted) 40%, transparent)' }} />
                 </div>
               </div>
             </CardContent>

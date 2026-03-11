@@ -200,14 +200,14 @@ async function uploadImageNative(endpoint: string, imageUri: string): Promise<an
 }
 
 export const predictionsApi = {
-  // Quick classify using Roboflow (mobile uses v6 — no 'Others' class)
+  // Quick classify using Roboflow (v9 — latest model)
   classifyImage: async (imageUri: string) => {
-    return uploadImageNative('/predictions/classify-image?model_version=6', imageUri);
+    return uploadImageNative('/predictions/classify-image?model_version=9', imageUri);
   },
 
   // Legacy analyze (for sample-based analysis)
   analyzeImage: async (imageUri: string) => {
-    return uploadImageNative('/predictions/classify-image?model_version=6', imageUri);
+    return uploadImageNative('/predictions/classify-image?model_version=9', imageUri);
   },
 
   // Check Roboflow configuration status
