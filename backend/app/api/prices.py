@@ -418,6 +418,16 @@ async def delete_price_entry(
         raise HTTPException(status_code=404, detail="Price entry not found")
 
 
+@router.get("/predict/model-info")
+async def get_prediction_model_info():
+    """
+    Get information about the trained price prediction model.
+    """
+    if not price_predictor.is_loaded:
+        price_predictor.load()
+    return price_predictor.get_model_info()
+
+
 @router.get("/predict/{chili_type}", response_model=PricePredictionResponse)
 async def predict_prices(
     chili_type: ChiliType,
@@ -446,16 +456,6 @@ async def predict_prices(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Prediction error: {str(e)}",
         )
-
-
-@router.get("/predict/model-info")
-async def get_prediction_model_info():
-    """
-    Get information about the trained price prediction model.
-    """
-    if not price_predictor.is_loaded:
-        price_predictor.load()
-    return price_predictor.get_model_info()
 
 
 @router.post("/seed", status_code=status.HTTP_201_CREATED)

@@ -72,8 +72,16 @@ api.interceptors.response.use(
       if (error.response.status === 401 && _onUnauthorized) {
         const url = error.config?.url || '';
         if (!url.includes('/auth/')) {
-          console.log('401 detected — auto-logging out');
-          await _onUnauthorized();
+          // Only auto-logout if the token has truly expired,
+          // not for admin-only endpoints or race conditions.
+          // Check if there is a stored token first — if not, trigger logout.
+          const token = await storage.getItem('authToken');
+          if (!token) {
+            console.log('401 detected with no stored token — auto-logging out');
+            await _onUnauthorized();
+          }
+          // Otherwise, let the caller handle the 401 error
+          // (e.g. show "access denied" instead of force-logging out)
         }
       }
     } else if (error.request) {
