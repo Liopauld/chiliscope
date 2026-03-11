@@ -693,7 +693,8 @@ async def classify_image(
                 "variety": variety,
                 "confidence": confidence,
                 "heat_level": heat_category,
-                "shu": predicted_shu,
+                "base_shu": predicted_shu,
+                "shu": adjusted_shu,
                 "adjusted_shu": adjusted_shu,
                 "maturity": maturity_data["maturity_stage"] if maturity_data else "Mature",
                 "maturity_data": maturity_data,
@@ -717,7 +718,8 @@ async def classify_image(
                 "variety": variety,
                 "confidence": confidence,
                 "heat_level": heat_category,
-                "shu": predicted_shu,
+                "base_shu": predicted_shu,
+                "shu": adjusted_shu,
                 "adjusted_shu": adjusted_shu,
                 "maturity": maturity_data,
                 "capsaicin": capsaicin_data,
@@ -1067,7 +1069,7 @@ async def segment_flower(
             }
             # If we have stress data and an original record, adjust SHU
             if flower_stress_data and original:
-                original_shu = original.get("shu", 0) or original.get("adjusted_shu", 0)
+                original_shu = original.get("adjusted_shu", 0) or original.get("shu", 0)
                 original_variety = original.get("variety", "Unknown")
                 shu_multiplier = flower_stress_data.get("shu_multiplier", 1.0)
                 adjusted_shu = int(original_shu * shu_multiplier)
@@ -1213,8 +1215,8 @@ async def refine_with_flower(
         from app.ml.shu_predictor import VARIETY_SHU_RANGES
         shu_min, shu_max = VARIETY_SHU_RANGES.get(original_variety, (0, 500000))
         refined_shu = max(shu_min, min(shu_max, refined_shu))
-        # Also apply the multiplier for double-impact
-        flower_adjusted_shu = int(refined_shu * shu_multiplier)
+        # Also apply the multiplier to the original adjusted SHU
+        flower_adjusted_shu = int(original_shu * shu_multiplier)
         flower_adjusted_shu = max(shu_min, min(shu_max, flower_adjusted_shu))
         
         # Capsaicin from refined SHU
@@ -1234,7 +1236,7 @@ async def refine_with_flower(
             "flower_stress": flower_stress_data,
             "flower_refined": True,
             "original_shu": original_shu,
-            "shu": refined_shu,
+            "shu": flower_adjusted_shu,
             "adjusted_shu": flower_adjusted_shu,
             "heat_level": heat_category,
             "capsaicin": refined_capsaicin,
