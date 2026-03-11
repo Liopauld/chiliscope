@@ -105,6 +105,42 @@ async def update_my_profile(
     )
 
 
+@router.get("/me/stats")
+async def get_user_stats(current_user: dict = Depends(get_current_user)):
+    """Get current user's usage statistics."""
+    samples_collection = MongoDB.get_collection(Collections.CHILI_SAMPLES)
+    
+    # Count user's samples
+    total_samples = await samples_collection.count_documents(
+        {"user_id": current_user["user_id"]}
+    )
+    
+    # Count by variety
+    variety_pipeline = [
+        {"$match": {"user_id": current_user["user_id"]}},
+        {"$group": {"_id": "$variety", "count": {"$sum": 1}}}
+    ]
+    variety_counts = await samples_collection.aggregate(variety_pipeline).to_list(10)
+    
+    # Get average confidence
+    confidence_pipeline = [
+        {"$match": {"user_id": current_user["user_id"]}},
+        {"$group": {
+            "_id": None,
+            "avg_confidence": {"$avg": "$predictions.variety_classification.confidence"}
+        }}
+    ]
+    confidence_result = await samples_collection.aggregate(confidence_pipeline).to_list(1)
+    
+    avg_confidence = confidence_result[0]["avg_confidence"] if confidence_result else None
+    
+    return {
+        "total_samples": total_samples,
+        "samples_by_variety": {item["_id"]: item["count"] for item in variety_counts if item["_id"]},
+        "average_confidence": round(avg_confidence * 100, 1) if avg_confidence else None
+    }
+
+
 @router.get("/{user_id}")
 async def get_user_by_id(
     user_id: str,
@@ -301,39 +337,3 @@ async def reactivate_user(
     )
     
     return {"message": f"User {target_user['full_name']} has been reactivated"}
-
-
-@router.get("/me/stats")
-async def get_user_stats(current_user: dict = Depends(get_current_user)):
-    """Get current user's usage statistics."""
-    samples_collection = MongoDB.get_collection(Collections.CHILI_SAMPLES)
-    
-    # Count user's samples
-    total_samples = await samples_collection.count_documents(
-        {"user_id": current_user["user_id"]}
-    )
-    
-    # Count by variety
-    variety_pipeline = [
-        {"$match": {"user_id": current_user["user_id"]}},
-        {"$group": {"_id": "$variety", "count": {"$sum": 1}}}
-    ]
-    variety_counts = await samples_collection.aggregate(variety_pipeline).to_list(10)
-    
-    # Get average confidence
-    confidence_pipeline = [
-        {"$match": {"user_id": current_user["user_id"]}},
-        {"$group": {
-            "_id": None,
-            "avg_confidence": {"$avg": "$predictions.variety_classification.confidence"}
-        }}
-    ]
-    confidence_result = await samples_collection.aggregate(confidence_pipeline).to_list(1)
-    
-    avg_confidence = confidence_result[0]["avg_confidence"] if confidence_result else None
-    
-    return {
-        "total_samples": total_samples,
-        "samples_by_variety": {item["_id"]: item["count"] for item in variety_counts if item["_id"]},
-        "average_confidence": round(avg_confidence * 100, 1) if avg_confidence else None
-    }

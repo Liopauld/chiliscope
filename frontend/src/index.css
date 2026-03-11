@@ -9,6 +9,30 @@
    BASE LAYER
    ================================ */
 @layer base {
+  :root {
+    --color-background: #fffbf7;
+    --color-surface: #fef7f0;
+    --color-card: #ffffff;
+    --color-foreground: #1c1917;
+    --color-foreground-secondary: #57534e;
+    --color-foreground-muted: #a8a29e;
+    --color-border: rgba(127,29,29,0.10);
+    --color-border-strong: rgba(127,29,29,0.18);
+    --color-input: #e7e5e4;
+  }
+
+  .dark {
+    --color-background: #1c1917;
+    --color-surface: #292524;
+    --color-card: #292524;
+    --color-foreground: #f5f5f4;
+    --color-foreground-secondary: #d6d3d1;
+    --color-foreground-muted: #78716c;
+    --color-border: rgba(245,245,244,0.10);
+    --color-border-strong: rgba(245,245,244,0.18);
+    --color-input: #44403c;
+  }
+
   * {
     @apply border-border;
   }

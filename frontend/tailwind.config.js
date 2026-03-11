@@ -81,16 +81,16 @@ export default {
           600: '#d97706',
         },
         /* --- Surfaces & backgrounds --- */
-        background: '#fffbf7',
-        surface: '#fef7f0',
-        card: '#ffffff',
-        foreground: '#1c1917',
-        'foreground-secondary': '#57534e',
-        'foreground-muted': '#a8a29e',
+        background: 'var(--color-background)',
+        surface: 'var(--color-surface)',
+        card: 'var(--color-card)',
+        foreground: 'var(--color-foreground)',
+        'foreground-secondary': 'var(--color-foreground-secondary)',
+        'foreground-muted': 'var(--color-foreground-muted)',
         /* --- Borders --- */
-        border: 'rgba(127,29,29,0.10)',
-        'border-strong': 'rgba(127,29,29,0.18)',
-        input: '#e7e5e4',
+        border: 'var(--color-border)',
+        'border-strong': 'var(--color-border-strong)',
+        input: 'var(--color-input)',
         ring: '#dc2626',
         /* --- Heat level colors (ChiliScope identity) --- */
         heat: {
