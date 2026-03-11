@@ -878,7 +878,17 @@ function ChiliResultsLayout({ analysis, navigate }: { analysis: AnalysisResult; 
         nextStep: 'Harvest immediately using scissors. Pick regularly to encourage continued fruiting.',
         badgeColor: 'bg-red-500',
       }
-    } else {
+    } else if (mat === 'Turning') {
+      return {
+        stageIdx: 5,
+        label: 'Ripening',
+        icon: 'circle',
+        weekRange: profile.timeline[5]?.week || 'Week 13–16',
+        description: 'Turning pods detected — the chili is changing color from green to its final hue. Heat is building rapidly but hasn\'t peaked yet. The pod is approaching harvest readiness.',
+        nextStep: 'Wait a few more days for full color change before harvesting for maximum heat and flavor.',
+        badgeColor: 'bg-orange-500',
+      }
+    } else if (mat === 'Over-Ripe' || mat === 'Dried/Spent') {
       // Overripe
       return {
         stageIdx: 6,
@@ -888,6 +898,16 @@ function ChiliResultsLayout({ analysis, navigate }: { analysis: AnalysisResult; 
         description: 'Overripe pods detected — the chili is past its prime harvest window. The pod may be softer and wrinkled but is still usable, especially for drying or making powder.',
         nextStep: 'Harvest and dry immediately. Remove overripe pods to redirect energy to younger fruit.',
         badgeColor: 'bg-red-800',
+      }
+    } else {
+      return {
+        stageIdx: 6,
+        label: 'Harvest',
+        icon: 'scissors',
+        weekRange: profile.timeline[6]?.week || 'Week 14–18',
+        description: `Detected maturity: ${mat}. The chili appears to be at or near its harvest stage.`,
+        nextStep: 'Inspect the pod color and firmness to decide when to harvest.',
+        badgeColor: 'bg-amber-600',
       }
     }
   }
