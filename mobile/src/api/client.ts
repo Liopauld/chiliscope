@@ -34,7 +34,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 30000, // 30 second timeout
+  timeout: 90000, // 90 seconds — Render free tier can take 50-60s to cold-start
 });
 
 // Request interceptor
@@ -303,7 +303,7 @@ export const pricesApi = {
   },
 
   getHistory: async (params?: { chili_type?: string; location?: string; limit?: number }) => {
-    const response = await api.get('/prices/', { params });
+    const response = await api.get('/prices', { params });
     return response.data;
   },
 
@@ -331,7 +331,7 @@ export const pricesApi = {
 // Users API (admin)
 export const usersApi = {
   getAll: async (skip = 0, limit = 100) => {
-    const response = await api.get('/users/', { params: { skip, limit } });
+    const response = await api.get('/users', { params: { skip, limit } });
     return response.data;
   },
 
@@ -456,6 +456,46 @@ export const notificationsApi = {
 
   unregisterDevice: async (token: string) => {
     const response = await api.delete('/forum/notifications/unregister-device', { data: { token } });
+    return response.data;
+  },
+};
+
+// Samples API
+export const samplesApi = {
+  list: async (page = 1, limit = 10) => {
+    const response = await api.get('/samples', { params: { page, limit } });
+    return response.data;
+  },
+  get: async (id: string) => {
+    const response = await api.get(`/samples/${id}`);
+    return response.data;
+  },
+  update: async (id: string, data: Record<string, any>) => {
+    const response = await api.put(`/samples/${id}`, data);
+    return response.data;
+  },
+  delete: async (id: string) => {
+    const response = await api.delete(`/samples/${id}`);
+    return response.data;
+  },
+  getPublicFeed: async (page = 1, limit = 20) => {
+    const response = await api.get('/samples/public/feed', { params: { page, page_size: limit } });
+    return response.data;
+  },
+};
+
+// Hotspots API
+export const hotspotsApi = {
+  list: async () => {
+    const response = await api.get('/hotspots');
+    return response.data;
+  },
+};
+
+// Content API
+export const contentApi = {
+  getContent: async () => {
+    const response = await api.get('/content/content');
     return response.data;
   },
 };

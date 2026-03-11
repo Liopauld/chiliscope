@@ -9,11 +9,13 @@ import {
   RefreshControl,
   StyleSheet,
   Image,
+  Share,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { predictionsApi } from '../api/client';
+import { predictionsApi, samplesApi } from '../api/client';
 
 interface SegmentItem {
   class_name?: string;
@@ -188,7 +190,25 @@ export default function LibraryScreen() {
           </View>
         </View>
 
-        <View style={styles.itemChevron}>
+        <View style={styles.itemActions}>
+          <TouchableOpacity
+            style={styles.shareButton}
+            onPress={async (e) => {
+              e.stopPropagation?.();
+              const resultId = item.analysis_id || item.id;
+              if (!resultId) return;
+              try {
+                await samplesApi.update(resultId, { is_public: true });
+                await Share.share({
+                  message: `Check out my ChiliScope analysis: https://chiliscope.netlify.app/results/${resultId}`,
+                });
+              } catch {
+                Alert.alert('Share', 'Could not share this analysis.');
+              }
+            }}
+          >
+            <Ionicons name="share-social-outline" size={18} color="#6b7280" />
+          </TouchableOpacity>
           <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
         </View>
       </TouchableOpacity>
@@ -433,5 +453,16 @@ const styles = StyleSheet.create({
   emptyText: {
     color: '#6b7280',
     marginTop: 16,
+  },
+  itemActions: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 4,
+    gap: 8,
+  },
+  shareButton: {
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: '#f3f4f6',
   },
 });

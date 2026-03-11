@@ -15,6 +15,7 @@ from .prices import router as prices_router
 from .chat import router as chat_router
 from .forum import router as forum_router
 from .ml_models import router as ml_models_router
+from .hotspots import router as hotspots_router
 
 router = APIRouter()
 
@@ -32,3 +33,4 @@ router.include_router(prices_router, tags=["Chili Prices"])
 router.include_router(chat_router, prefix="/chat", tags=["Chat"])
 router.include_router(forum_router, prefix="/forum", tags=["Forum"])
 router.include_router(ml_models_router, prefix="/ml", tags=["Trained ML Models"])
+router.include_router(hotspots_router, prefix="/hotspots", tags=["Hotspots"])

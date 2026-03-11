@@ -254,6 +254,39 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.exploreCard}
+            onPress={() => navigation.navigate('Growth' as never)}
+          >
+            <View style={[styles.exploreIcon, { backgroundColor: '#dcfce7' }]}>
+              <Ionicons name="leaf" size={24} color="#16a34a" />
+            </View>
+            <Text style={styles.exploreTitle}>Growth Guide</Text>
+            <Text style={styles.exploreSubtitle}>Growing stages & care</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.exploreCard}
+            onPress={() => navigation.navigate('ChiliMap' as never)}
+          >
+            <View style={[styles.exploreIcon, { backgroundColor: '#dbeafe' }]}>
+              <Ionicons name="map" size={24} color="#3b82f6" />
+            </View>
+            <Text style={styles.exploreTitle}>Chili Map</Text>
+            <Text style={styles.exploreSubtitle}>Philippine hotspots</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.exploreCard}
+            onPress={() => navigation.navigate('Studies' as never)}
+          >
+            <View style={[styles.exploreIcon, { backgroundColor: '#fef2f2' }]}>
+              <Ionicons name="library" size={24} color="#dc2626" />
+            </View>
+            <Text style={styles.exploreTitle}>Studies</Text>
+            <Text style={styles.exploreSubtitle}>Research & references</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.exploreCard}
             onPress={() => navigation.navigate('ModelComparison' as never)}
           >
             <View style={[styles.exploreIcon, { backgroundColor: '#f5f3ff' }]}>

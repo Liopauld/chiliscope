@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Flame, Search, Trash2, Sparkles, Filter, Grid, List, ChevronLeft, ChevronRight, Loader2, Printer, Scan, FlowerIcon, Ruler, Scale } from 'lucide-react'
+import { Flame, Search, Trash2, Sparkles, Filter, Grid, List, ChevronLeft, ChevronRight, Loader2, Printer, Scan, FlowerIcon, Ruler, Scale, Globe, Link2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { useAnalysisStore, type AnalysisResult } from '@/stores/analysisStore'
 import { predictionsApi } from '@/lib/api'
+import { samplesApi } from '@/lib/api'
 import { formatDate, formatNumber } from '@/lib/utils'
 
 const ITEMS_PER_PAGE = 12
@@ -34,6 +35,28 @@ export default function Library() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [publicStates, setPublicStates] = useState<Record<string, boolean>>({})
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+
+  const togglePublic = async (e: React.MouseEvent, resultId: string) => {
+    e.stopPropagation()
+    const current = publicStates[resultId] ?? false
+    const next = !current
+    setPublicStates((prev) => ({ ...prev, [resultId]: next }))
+    try {
+      await samplesApi.update(resultId, { is_public: next })
+    } catch {
+      setPublicStates((prev) => ({ ...prev, [resultId]: current }))
+    }
+  }
+
+  const copyShareLink = (e: React.MouseEvent, resultId: string) => {
+    e.stopPropagation()
+    const url = `${window.location.origin}/results/${resultId}`
+    navigator.clipboard.writeText(url)
+    setCopiedId(resultId)
+    setTimeout(() => setCopiedId(null), 2000)
+  }
 
   // Fetch prediction history from backend on mount
   useEffect(() => {
@@ -57,6 +80,13 @@ export default function Library() {
           varietiesDetected: (item.varieties_detected as AnalysisResult['varietiesDetected']) || undefined,
           recommendations: {},
         }))
+        // Track public states from backend
+        const pubStates: Record<string, boolean> = {}
+        for (const item of data.items || []) {
+          const id = (item as Record<string, unknown>).analysis_id as string
+          if (id) pubStates[id] = !!(item as Record<string, unknown>).is_public
+        }
+        setPublicStates((prev) => ({ ...prev, ...pubStates }))
         // Merge: backend items + any local-only items
         const backendIds = new Set(items.map((i) => i.id))
         const localOnly = analysisHistory.filter((h) => !backendIds.has(h.id))
@@ -265,6 +295,24 @@ export default function Library() {
                   <div className={`absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold text-white ${heatGradient(result.heatLevel)} shadow-sm`}>
                     {result.heatLevel}
                   </div>
+                  <div className="absolute bottom-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => togglePublic(e, result.id)}
+                      className={`p-1.5 rounded-full backdrop-blur-sm shadow-sm transition-colors ${publicStates[result.id] ? 'bg-green-500 text-white' : 'bg-black/50 text-white/80 hover:bg-black/70'}`}
+                      title={publicStates[result.id] ? 'Public — click to make private' : 'Private — click to share publicly'}
+                    >
+                      <Globe className="h-3.5 w-3.5" />
+                    </button>
+                    {publicStates[result.id] && (
+                      <button
+                        onClick={(e) => copyShareLink(e, result.id)}
+                        className="p-1.5 rounded-full bg-black/50 text-white/80 hover:bg-black/70 backdrop-blur-sm shadow-sm transition-colors"
+                        title={copiedId === result.id ? 'Copied!' : 'Copy share link'}
+                      >
+                        <Link2 className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </div>
                   {result.scanType && result.scanType !== 'classification' && (
                     <div className="absolute top-2.5 left-2.5 px-2 py-1 rounded-full text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm flex items-center gap-1">
                       {result.scanType === 'flower_segmentation' ? <FlowerIcon className="h-3 w-3" /> : <Scan className="h-3 w-3" />}
@@ -273,7 +321,14 @@ export default function Library() {
                   )}
                 </div>
                 <CardContent className="p-3.5">
-                  <p className="font-bold text-foreground">{result.variety}</p>
+                  <div className="flex items-center justify-between">
+                    <p className="font-bold text-foreground">{result.variety}</p>
+                    {publicStates[result.id] && (
+                      <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-50 text-green-700 font-medium flex items-center gap-0.5">
+                        <Globe className="h-2.5 w-2.5" /> Public
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center justify-between">
                     <p className="text-foreground-secondary text-sm font-medium">{formatNumber(result.shu)} SHU</p>
                     {result.totalDetected && result.totalDetected > 0 ? (
@@ -378,7 +433,25 @@ export default function Library() {
                     )}
                     <p className="text-xs text-foreground-muted mt-0.5">{formatDate(result.timestamp)}</p>
                   </div>
-                  <Button variant="outline" size="sm">View</Button>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={(e) => togglePublic(e, result.id)}
+                      className={`p-1.5 rounded-md transition-colors ${publicStates[result.id] ? 'text-green-600 bg-green-50 hover:bg-green-100' : 'text-foreground-muted hover:bg-surface'}`}
+                      title={publicStates[result.id] ? 'Public — click to make private' : 'Private — click to share publicly'}
+                    >
+                      <Globe className="h-4 w-4" />
+                    </button>
+                    {publicStates[result.id] && (
+                      <button
+                        onClick={(e) => copyShareLink(e, result.id)}
+                        className="p-1.5 rounded-md text-foreground-muted hover:bg-surface transition-colors"
+                        title={copiedId === result.id ? 'Copied!' : 'Copy share link'}
+                      >
+                        <Link2 className="h-4 w-4" />
+                      </button>
+                    )}
+                    <Button variant="outline" size="sm">View</Button>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>

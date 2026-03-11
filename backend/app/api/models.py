@@ -34,7 +34,7 @@ from app.schemas.model import (
 router = APIRouter()
 
 
-@router.get("/", response_model=ModelListResponse)
+@router.get("", response_model=ModelListResponse)
 async def list_models(
     model_type: Optional[ModelType] = None,
     is_active: Optional[bool] = None,

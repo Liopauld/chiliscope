@@ -12,12 +12,13 @@ from pathlib import Path
 import uuid
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Query
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Query, Request
 from PIL import Image
 import io
 
 from app.core.database import MongoDB, Collections
 from app.core.security import get_current_user
+from app.core.rate_limit import limiter
 from app.services.roboflow_service import classify_chili_image, roboflow_classifier, roboflow_segmenter, chili_segmenter, maturity_classifier, flower_stress_classifier
 from app.ml.shu_predictor import get_shu_predictor
 from app.schemas.prediction import (
@@ -505,7 +506,9 @@ async def get_prediction(
 
 
 @router.post("/classify-image")
+@limiter.limit("20/minute")
 async def classify_image(
+    request: Request,
     file: UploadFile = File(...),
     model_version: Optional[str] = Query(None, description="Roboflow model version override (e.g. '6' for mobile)"),
     current_user: dict = Depends(get_current_user)
@@ -742,7 +745,9 @@ async def classify_image(
 
 
 @router.post("/segment-image")
+@limiter.limit("15/minute")
 async def segment_image(
+    request: Request,
     file: UploadFile = File(...),
     analysis_id: str = Query(None, description="Existing analysis_id to update instead of creating new entry"),
     current_user: dict = Depends(get_current_user)
@@ -911,7 +916,9 @@ async def segment_image(
 
 
 @router.post("/segment-flower")
+@limiter.limit("15/minute")
 async def segment_flower(
+    request: Request,
     file: UploadFile = File(...),
     analysis_id: str = Query(None, description="Existing analysis_id to update instead of creating new entry"),
     current_user: dict = Depends(get_current_user)

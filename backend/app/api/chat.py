@@ -17,7 +17,8 @@ import re
 
 from google import genai
 from google.genai import types
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from app.core.rate_limit import limiter
 from pydantic import BaseModel
 
 from app.core.config import settings
@@ -114,7 +115,8 @@ SUGGESTION_POOL: list[str] = [
 # ---------------------------------------------------------------------------
 
 @router.post("/ask", response_model=ChatResponse)
-async def ask_chilibot(chat: ChatRequest):
+@limiter.limit("20/minute")
+async def ask_chilibot(request: Request, chat: ChatRequest):
     """
     Ask ChiliBot a question. Powered by Google Gemini AI.
     Conversation history is accepted so the model has context.

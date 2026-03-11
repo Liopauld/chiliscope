@@ -139,8 +139,8 @@ class TrainedMaturityPredictor:
 _maturity_predictor = None
 
 
-def get_trained_maturity_predictor() -> TrainedMaturityPredictor:
+def get_trained_maturity_predictor(force_reload: bool = False) -> TrainedMaturityPredictor:
     global _maturity_predictor
-    if _maturity_predictor is None:
+    if _maturity_predictor is None or force_reload:
         _maturity_predictor = TrainedMaturityPredictor()
     return _maturity_predictor

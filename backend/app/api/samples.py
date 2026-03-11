@@ -26,7 +26,7 @@ from app.schemas.sample import (
 router = APIRouter()
 
 
-@router.post("/", response_model=ChiliSampleResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=ChiliSampleResponse, status_code=status.HTTP_201_CREATED)
 async def create_sample(
     sample_data: ChiliSampleCreate,
     current_user: dict = Depends(get_current_user)
@@ -73,7 +73,7 @@ async def create_sample(
     )
 
 
-@router.get("/", response_model=SampleListResponse)
+@router.get("", response_model=SampleListResponse)
 async def list_samples(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
@@ -257,6 +257,12 @@ async def delete_sample(
     """Delete a chili sample."""
     collection = MongoDB.get_collection(Collections.CHILI_SAMPLES)
     
+    # Fetch sample first for storage cleanup
+    sample = await collection.find_one({
+        "sample_id": sample_id,
+        "user_id": current_user["user_id"]
+    })
+    
     result = await collection.delete_one({
         "sample_id": sample_id,
         "user_id": current_user["user_id"]
@@ -268,7 +274,21 @@ async def delete_sample(
             detail="Sample not found"
         )
     
-    # TODO: Also delete associated images from storage
+    # Delete associated images from storage
+    if sample:
+        for img in sample.get("images", []):
+            for url_key in ["original_url", "processed_url", "thumbnail_url"]:
+                url = img.get(url_key, "")
+                if "cloudinary" in url:
+                    from app.core.cloudinary_service import CloudinaryService
+                    public_id = url.split("/upload/")[-1].rsplit(".", 1)[0] if "/upload/" in url else ""
+                    if public_id:
+                        CloudinaryService.delete_image(public_id)
+        # Clean up local upload directory
+        import shutil, os
+        upload_dir = f"uploads/{sample_id}"
+        if os.path.isdir(upload_dir):
+            shutil.rmtree(upload_dir, ignore_errors=True)
     
     return {"message": "Sample deleted successfully"}
 

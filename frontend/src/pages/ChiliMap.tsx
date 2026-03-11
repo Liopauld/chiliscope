@@ -13,6 +13,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import api from '@/lib/api'
 
 // ─── Chili Type Definitions ───────────────────────────────────────────────────
 
@@ -624,6 +625,30 @@ export default function ChiliMap() {
   const [flyTo, setFlyTo] = useState<{ center: [number, number]; zoom: number } | null>(null)
   const [showLegend, setShowLegend] = useState(true)
   const [showFilters, setShowFilters] = useState(true)
+  const [hotspots, setHotspots] = useState<Hotspot[]>(HOTSPOTS)
+
+  // Fetch hotspots from API with fallback to hardcoded data
+  useEffect(() => {
+    api.get('/hotspots').then((res) => {
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        setHotspots(res.data.map((h: Record<string, unknown>) => ({
+          id: h.id as string,
+          name: h.name as string,
+          region: h.region as string,
+          province: h.province as string,
+          lat: h.lat as number,
+          lng: h.lng as number,
+          type: h.type as SpotType,
+          chilies: h.chilies as ChiliType[],
+          description: h.description as string,
+          famous_for: h.famous_for as string,
+          rating: h.rating as number,
+          best_season: h.best_season as string,
+          tips: h.tips as string | undefined,
+        })))
+      }
+    }).catch(() => { /* keep hardcoded fallback */ })
+  }, [])
 
   // Geolocation state
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
@@ -755,12 +780,12 @@ export default function ChiliMap() {
   }, [])
 
   const filteredSpots = useMemo(() => {
-    return HOTSPOTS.filter((spot) => {
+    return hotspots.filter((spot) => {
       if (selectedChili !== 'all' && !spot.chilies.includes(selectedChili)) return false
       if (selectedType !== 'all' && spot.type !== selectedType && !(selectedType === 'both' && spot.type === 'both')) return false
       return true
     })
-  }, [selectedChili, selectedType])
+  }, [selectedChili, selectedType, hotspots])
 
   const handleSpotClick = (spot: Hotspot) => {
     setSelectedSpot(spot)

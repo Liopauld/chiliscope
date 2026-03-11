@@ -24,6 +24,10 @@ import ForumScreen from '../screens/ForumScreen';
 import PostDetailScreen from '../screens/PostDetailScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 import ModelComparisonScreen from '../screens/ModelComparisonScreen';
+import GrowthScreen from '../screens/GrowthScreen';
+import StudiesScreen from '../screens/StudiesScreen';
+import AboutScreen from '../screens/AboutScreen';
+import ChiliMapScreen from '../screens/ChiliMapScreen';
 
 export type RootStackParamList = {
   Auth: undefined;
@@ -43,6 +47,10 @@ export type RootStackParamList = {
   PostDetail: { postId: string };
   CreatePost: undefined;
   ModelComparison: undefined;
+  Growth: undefined;
+  Studies: undefined;
+  About: undefined;
+  ChiliMap: undefined;
 };
 
 export type MainTabParamList = {
@@ -124,6 +132,10 @@ export default function RootNavigator() {
           <Stack.Screen name="PostDetail" component={PostDetailScreen} />
           <Stack.Screen name="CreatePost" component={CreatePostScreen} />
           <Stack.Screen name="ModelComparison" component={ModelComparisonScreen} />
+          <Stack.Screen name="Growth" component={GrowthScreen} />
+          <Stack.Screen name="Studies" component={StudiesScreen} />
+          <Stack.Screen name="About" component={AboutScreen} />
+          <Stack.Screen name="ChiliMap" component={ChiliMapScreen} />
         </>
       ) : (
         <Stack.Screen name="Auth" component={AuthStack} />

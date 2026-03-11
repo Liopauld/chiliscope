@@ -9,6 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 90000, // 90 seconds — Render free tier can take 50-60s to cold-start
 })
 
 // Request interceptor — attach Firebase ID token
@@ -94,6 +95,15 @@ export const authApi = {
     const response = await api.post('/auth/refresh')
     return response.data
   },
+
+  changePassword: async (currentPassword: string, newPassword: string, confirmPassword: string) => {
+    const response = await api.post('/auth/change-password', {
+      current_password: currentPassword,
+      new_password: newPassword,
+      confirm_password: confirmPassword,
+    })
+    return response.data
+  },
 }
 
 // Samples API
@@ -120,6 +130,13 @@ export const samplesApi = {
   
   delete: async (id: string) => {
     const response = await api.delete(`/samples/${id}`)
+    return response.data
+  },
+
+  getPublicFeed: async (page = 1, limit = 20, variety?: string) => {
+    const params: Record<string, unknown> = { page, page_size: limit }
+    if (variety) params.variety = variety
+    const response = await api.get('/samples/public/feed', { params })
     return response.data
   },
 }
@@ -248,11 +265,15 @@ export const usersApi = {
   list: async (skip = 0, limit = 50, user_type?: string) => {
     const params: Record<string, unknown> = { skip, limit }
     if (user_type) params.user_type = user_type
-    const response = await api.get('/users/', { params })
+    const response = await api.get('/users', { params })
     return response.data
   },
   getUser: async (userId: string) => {
     const response = await api.get(`/users/${userId}`)
+    return response.data
+  },
+  updateProfile: async (data: { full_name?: string; profile_image?: string }) => {
+    const response = await api.put('/users/me', data)
     return response.data
   },
   deactivate: async (userId: string, data: {
@@ -273,7 +294,7 @@ export const usersApi = {
 // Models API
 export const modelsApi = {
   list: async () => {
-    const response = await api.get('/models/')
+    const response = await api.get('/models')
     return response.data
   },
   getActive: async () => {
@@ -345,7 +366,7 @@ export const pricesApi = {
   },
 
   getHistory: async (params?: { chili_type?: string; location?: string; limit?: number }) => {
-    const response = await api.get('/prices/', { params })
+    const response = await api.get('/prices', { params })
     return response.data
   },
 

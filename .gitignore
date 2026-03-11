@@ -45,10 +45,13 @@ temp/
 # Model files (too large for git)
 *.h5
 *.pkl
-*.joblib
 *.onnx
 models/*.h5
 models/*.pkl
+
+# Joblib — ignore everywhere EXCEPT backend ML models directory
+*.joblib
+!backend/app/ml/models/*.joblib
 
 # Jupyter
 .ipynb_checkpoints/

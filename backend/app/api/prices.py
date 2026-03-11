@@ -47,7 +47,7 @@ def price_doc_to_response(doc: dict) -> PriceEntryResponse:
     )
 
 
-@router.post("/", response_model=PriceEntryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=PriceEntryResponse, status_code=status.HTTP_201_CREATED)
 async def create_price_entry(
     entry: PriceEntryCreate,
     current_user: dict = Depends(require_admin),
@@ -76,7 +76,7 @@ async def create_price_entry(
     return price_doc_to_response(doc)
 
 
-@router.get("/", response_model=List[PriceEntryResponse])
+@router.get("", response_model=List[PriceEntryResponse])
 async def get_price_history(
     chili_type: Optional[ChiliType] = None,
     location: Optional[MarketLocation] = None,

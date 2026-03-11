@@ -292,8 +292,8 @@ class SHUPredictor:
 _shu_predictor = None
 
 
-def get_shu_predictor() -> SHUPredictor:
+def get_shu_predictor(force_reload: bool = False) -> SHUPredictor:
     global _shu_predictor
-    if _shu_predictor is None:
+    if _shu_predictor is None or force_reload:
         _shu_predictor = SHUPredictor()
     return _shu_predictor

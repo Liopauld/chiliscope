@@ -37,7 +37,7 @@ export default function ProfileScreen() {
     {
       icon: 'person-outline' as const,
       label: 'Edit Profile',
-      onPress: () => {},
+      onPress: () => Alert.alert('Edit Profile', 'Profile editing is managed through your account settings.'),
     },
     {
       icon: 'book-outline' as const,
@@ -54,6 +54,21 @@ export default function ProfileScreen() {
       label: 'Price Monitor',
       onPress: () => navigation.navigate('PriceMonitor'),
     },
+    {
+      icon: 'leaf-outline' as const,
+      label: 'Growth Guide',
+      onPress: () => navigation.navigate('Growth'),
+    },
+    {
+      icon: 'map-outline' as const,
+      label: 'Chili Map',
+      onPress: () => navigation.navigate('ChiliMap'),
+    },
+    {
+      icon: 'library-outline' as const,
+      label: 'Studies & References',
+      onPress: () => navigation.navigate('Studies'),
+    },
     ...(isResearcher ? [{
       icon: 'bar-chart-outline' as const,
       label: 'Analytics',
@@ -69,17 +84,17 @@ export default function ProfileScreen() {
     {
       icon: 'notifications-outline' as const,
       label: 'Notifications',
-      onPress: () => {},
+      onPress: () => navigation.navigate('Notifications'),
     },
     {
       icon: 'help-circle-outline' as const,
       label: 'Help & Support',
-      onPress: () => {},
+      onPress: () => navigation.navigate('About'),
     },
     {
       icon: 'information-circle-outline' as const,
       label: 'About',
-      onPress: () => {},
+      onPress: () => navigation.navigate('About'),
     },
   ];
 

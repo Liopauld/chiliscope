@@ -115,7 +115,7 @@ class Settings(BaseSettings):
     # Roboflow Configuration
     roboflow_api_key: str = ""
     roboflow_project_id: str = "chili-classification-5ohkl"
-    roboflow_model_version: str = "7"
+    roboflow_model_version: str = "5"
     roboflow_use_hosted: bool = True  # True = hosted API, False = local inference
     
     # Chili Segmentation Model (instance segmentation — detects & classifies pods)

@@ -9,7 +9,7 @@ from datetime import timedelta
 from typing import Annotated
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 
 from app.core.config import settings
 from app.core.database import MongoDB, Collections
@@ -31,12 +31,14 @@ from app.schemas.user import (
     LoginForm,
     FirebaseLoginRequest,
 )
+from app.core.rate_limit import limiter
 
 router = APIRouter()
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def register_user(user_data: UserCreate):
+@limiter.limit("5/minute")
+async def register_user(request: Request, user_data: UserCreate):
     """
     Register a new user and automatically log them in.
     
@@ -102,7 +104,8 @@ async def register_user(user_data: UserCreate):
 
 
 @router.post("/login", response_model=Token)
-async def login(form_data: LoginForm):
+@limiter.limit("10/minute")
+async def login(request: Request, form_data: LoginForm):
     """
     Authenticate user and return JWT tokens.
     
@@ -313,7 +316,8 @@ async def logout(current_user: dict = Depends(get_current_user)):
 
 
 @router.post("/firebase-login", response_model=Token)
-async def firebase_login(body: FirebaseLoginRequest):
+@limiter.limit("10/minute")
+async def firebase_login(request: Request, body: FirebaseLoginRequest):
     """
     Authenticate via Firebase ID token.
 

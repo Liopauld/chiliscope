@@ -575,7 +575,7 @@ export default function AdminDashboard() {
                       <StatusBadge status="active" />
                     </div>
                     <h3 className="font-bold font-display text-foreground mb-0.5">Chili Classifier</h3>
-                    <p className="text-xs text-foreground-muted mb-4">Roboflow · chili-classification-5ohkl/2</p>
+                    <p className="text-xs text-foreground-muted mb-4">Roboflow · chili-classification-5ohkl/5</p>
                     <div className="space-y-3">
                       <div>
                         <div className="flex justify-between text-xs mb-1"><span className="text-foreground-muted">Avg Confidence</span><span className="font-bold text-foreground">{stats.avgAccuracy}%</span></div>

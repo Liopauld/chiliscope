@@ -418,8 +418,19 @@ export default function Upload() {
     setIsSegmenting(true)
     try {
       const result = await predictionsApi.segmentImage(files[0].file, summary.analysisId || undefined)
-      const segResult = result as SegmentationResult
-      const varietyNames = Object.keys(segResult.varieties_detected || {}).join(', ') || 'Unknown'
+      if (result.success === false) {
+        toast({ variant: 'destructive', title: 'Segmentation unavailable', description: result.error || 'The segmentation model is not configured.' })
+        return
+      }
+      const segResult: SegmentationResult = {
+        total_detected: result.total_detected ?? 0,
+        segments: result.segments ?? [],
+        varieties_detected: result.varieties_detected ?? {},
+        measurements: result.measurements ?? null,
+        processing_time_ms: result.processing_time_ms ?? 0,
+        model: result.model ?? 'unknown',
+      }
+      const varietyNames = Object.keys(segResult.varieties_detected).join(', ') || 'Unknown'
       setSummary((prev) => prev ? { ...prev, segmentation: segResult } : prev)
       toast({ title: 'Segmentation complete!', description: `Detected ${segResult.total_detected} pod(s): ${varietyNames}` })
     } catch (error) {
@@ -637,7 +648,7 @@ export default function Upload() {
                         <div className="bg-purple-50 rounded-xl p-3 text-center">
                           <Flame className="h-4 w-4 text-purple-600 mx-auto mb-1" />
                           <p className="text-[10px] text-foreground-muted">Varieties Found</p>
-                          <p className="font-bold text-sm">{Object.keys(summary.segmentation.varieties_detected).length}</p>
+                          <p className="font-bold text-sm">{Object.keys(summary.segmentation.varieties_detected || {}).length}</p>
                         </div>
                         {summary.segmentation.measurements && (
                           <>
@@ -656,7 +667,7 @@ export default function Upload() {
                       </div>
 
                       {/* Per-variety breakdown cards */}
-                      {Object.entries(summary.segmentation.varieties_detected).map(([varietyName, info]) => {
+                      {Object.entries(summary.segmentation.varieties_detected || {}).map(([varietyName, info]) => {
                         const varietyColor = varietyName === 'Siling Haba' ? 'green' : varietyName === 'Siling Labuyo' ? 'red' : 'orange'
                         const bgClass = varietyColor === 'green' ? 'bg-green-50 border-green-200' : varietyColor === 'red' ? 'bg-red-50 border-red-200' : 'bg-orange-50 border-orange-200'
                         const textClass = varietyColor === 'green' ? 'text-green-700' : varietyColor === 'red' ? 'text-red-700' : 'text-orange-700'
@@ -732,7 +743,7 @@ export default function Upload() {
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    {summary.segmentation!.segments
+                                    {(summary.segmentation!.segments || [])
                                       .filter((s) => s.variety === varietyName)
                                       .map((seg) => (
                                         <tr key={seg.pod_number} className="border-t border-gray-100/50">

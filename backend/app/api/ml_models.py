@@ -13,10 +13,12 @@ import json
 import os
 import logging
 from typing import Optional
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from pydantic import BaseModel, Field
 from PIL import Image
 import io
+
+from app.core.security import require_admin
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -228,3 +230,44 @@ async def extract_color_features_endpoint(file: UploadFile = File(...)):
 
     features = extract_color_features(image_bytes=contents)
     return features
+
+
+# ── Model Retraining (Admin only) ───────────────────────────────────
+
+@router.post("/retrain")
+async def retrain_models(
+    current_user: dict = Depends(require_admin)
+):
+    """
+    Retrain all ML models (SHU LR, SHU RF, Maturity DT).
+    Generates fresh datasets, retrains, and saves new model artifacts.
+    Admin-only endpoint.
+    """
+    import asyncio
+    from ..ml.train_models import main as run_training_pipeline
+
+    try:
+        loop = asyncio.get_event_loop()
+        lr_model, rf_model, dt_model, comparison = await loop.run_in_executor(
+            None, run_training_pipeline
+        )
+
+        # Reload predictors so they pick up new weights
+        from ..ml.shu_predictor import get_shu_predictor
+        from ..ml.maturity_predictor_trained import get_trained_maturity_predictor
+        get_shu_predictor(force_reload=True)
+        get_trained_maturity_predictor(force_reload=True)
+
+        return {
+            "status": "success",
+            "message": "All models retrained successfully",
+            "comparison_summary": comparison.get("recommendation", {}),
+            "models_retrained": [
+                "linear_regression_shu",
+                "random_forest_shu",
+                "decision_tree_maturity",
+            ],
+        }
+    except Exception as e:
+        logger.error("Model retraining failed: %s", e, exc_info=True)
+        raise HTTPException(500, f"Retraining failed: {str(e)}")
