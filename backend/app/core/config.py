@@ -121,7 +121,7 @@ class Settings(BaseSettings):
     # Chili Segmentation Model (instance segmentation — detects & classifies pods)
     roboflow_chili_segmentation_api_key: str = ""
     roboflow_chili_segmentation_project_id: str = "chili-segmentation-pl3my"
-    roboflow_chili_segmentation_model_version: str = "5"
+    roboflow_chili_segmentation_model_version: str = "7"
     
     # Chili Maturity Classifier
     roboflow_maturity_api_key: str = ""

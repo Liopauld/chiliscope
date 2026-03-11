@@ -45,7 +45,7 @@ services:
       - key: ROBOFLOW_CHILI_SEGMENTATION_PROJECT_ID
         value: chili-segmentation-pl3my
       - key: ROBOFLOW_CHILI_SEGMENTATION_MODEL_VERSION
-        value: "5"
+        value: "7"
       # Roboflow — Flower Segmentation
       - key: ROBOFLOW_SEGMENTATION_PROJECT_ID
         value: flower-segmentation-brl0m

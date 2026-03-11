@@ -376,7 +376,7 @@ class ChiliSegmenter:
     """
     Roboflow chili pod instance segmentation model.
 
-    Model: chili-segmentation-pl3my/5
+    Model: chili-segmentation-pl3my/7
     Classes: siling-demonyo-pod, siling-haba-pod, siling-labuyo-pod
 
     This model detects AND classifies multiple chili pods in a single image,
