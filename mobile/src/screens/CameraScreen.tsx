@@ -30,8 +30,10 @@ interface MaturityData {
 
 interface ClassificationResult {
   success: boolean;
+  is_chili?: boolean;
   variety?: string;
   confidence?: number;
+  message?: string;
   predictions?: Array<{ class: string; confidence: number }>;
   processing_time_ms?: number;
   adjusted_shu?: number;
@@ -376,8 +378,43 @@ export default function CameraScreen() {
           resizeMode="contain"
         />
 
+        {/* "Others" — Not a Chili */}
+        {classResult && classResult.success && classResult.is_chili === false && (
+          <ScrollView style={styles.resultsContainer}>
+            <View style={styles.resultCard}>
+              <View style={[styles.varietyBadge, { backgroundColor: '#6b7280' }]}>
+                <Ionicons name="alert-circle" size={24} color="white" />
+                <Text style={styles.varietyText}>Not a Chili Pepper</Text>
+              </View>
+              <View style={{ padding: 16, alignItems: 'center' }}>
+                <Text style={{ fontSize: 15, color: '#6b7280', textAlign: 'center', lineHeight: 22 }}>
+                  {classResult.message || 'The uploaded image does not appear to be a chili pepper. Please upload an image of a chili pepper for analysis.'}
+                </Text>
+              </View>
+              {classResult.predictions && classResult.predictions.length > 0 && (
+                <View style={styles.allPredictions}>
+                  <Text style={styles.allPredictionsTitle}>Model Predictions</Text>
+                  {classResult.predictions.map((pred, idx) => (
+                    <View key={idx} style={styles.predictionRow}>
+                      <Text style={styles.predictionClass}>{pred.class}</Text>
+                      <Text style={styles.predictionConfidence}>
+                        {(pred.confidence * 100).toFixed(1)}%
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+              {classResult.processing_time_ms && (
+                <Text style={styles.processingTime}>
+                  Processed in {classResult.processing_time_ms.toFixed(0)}ms
+                </Text>
+              )}
+            </View>
+          </ScrollView>
+        )}
+
         {/* Chili Classification Results */}
-        {classResult && classResult.success && (
+        {classResult && classResult.success && classResult.is_chili !== false && (
           <ScrollView style={styles.resultsContainer}>
             <View style={styles.resultCard}>
               <View style={[styles.varietyBadge, { backgroundColor: getVarietyColor(classResult.variety || '') }]}>
