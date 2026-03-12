@@ -417,7 +417,7 @@ class ChiliSegmenter:
     }
 
     def __init__(self):
-        self.api_key = settings.roboflow_chili_segmentation_api_key
+        self.api_key = settings.roboflow_chili_segmentation_api_key or settings.roboflow_api_key
         self.project_id = settings.roboflow_chili_segmentation_project_id
         self.model_version = settings.roboflow_chili_segmentation_model_version
         self.api_base = "https://serverless.roboflow.com"
