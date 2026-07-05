@@ -2,7 +2,7 @@
   "expo": {
     "name": "ChiliScope",
     "slug": "chiliscope",
-    "owner": "liopauld",
+    "owner": "himighub",
     "version": "1.0.0",
     "scheme": "chiliscope",
     "orientation": "portrait",
@@ -37,8 +37,7 @@
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.INTERNET"
       ],
-      "package": "com.chiliscope.app",
-      "usesCleartextTraffic": true
+      "package": "com.chiliscope.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -64,11 +63,12 @@
           }
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "75e87adb-752a-4b9a-8b37-fb90d94ba1f8"
+        "projectId": "6279e21b-84af-4c03-8247-9ba7cc5e2cd9"
       }
     }
   }

@@ -10,7 +10,7 @@
     "preview": {
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.100.31:8000/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://chiliscope-api.onrender.com/api/v1"
       },
       "android": {
         "buildType": "apk"
@@ -21,7 +21,7 @@
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.100.31:8000/api/v1"
+        "EXPO_PUBLIC_API_URL": "https://chiliscope-api.onrender.com/api/v1"
       },
       "android": {
         "buildType": "apk"
